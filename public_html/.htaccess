@@ -1,0 +1,7 @@
+ErrorDocument 404 /not_found.html
+AddType text/html .html
+Options Indexes FollowSymLinks MultiViews
+IndexOptions FancyIndexing IgnoreCase VersionSort SuppressHTMLPreamble
+DirectoryIndex "index_real.html"
+HeaderName /above.html
+ReadmeName /below.html
