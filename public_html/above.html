@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ubuntu Manpages $title</title>
+    <link rel="stylesheet" href="/ubuntu-book.css" type="text/css">
+  </head>
+  <body>
+<script language="JavaScript">
+function highlight(word) {
+	if (location.href.match("/" + word)) {
+		return("current");
+	} else {
+		return("plain");
+	}
+}
+function navbar() {
+	document.write("<ul>");
+	versions = new Array();
+	versions.push({"name":"dapper", "number":"6.06 LTS"});
+	versions.push({"name":"edgy", "number":"6.10"});
+	versions.push({"name":"feisty", "number":"7.04"});
+	versions.push({"name":"gutsy", "number":"7.10"});
+	versions.push({"name":"hardy", "number":"8.04 LTS"});
+	for (var i=0; i<versions.length; i++) {
+		document.write("<li id=" + highlight(versions[i]["name"]) + "><a href=/manpages/" + versions[i]["name"] + ">" + versions[i]["number"] + "</a></li>");
+	}
+	document.write("</ul>");
+}
+</script>
+    <div xmlns="" id="mastwrap">
+      <div id="masthead">
+        <div id="sisternav">
+          <div>
+            <form action="http://www.google.com/cse" id="cse-search-box">
+            <div>
+              <input type="hidden" name="cx" value="003883529982892832976:5zl6o8w6f0s" />
+              <input type="hidden" name="ie" value="UTF-8" />
+              <input type="text" name="q" size="31" />
+              <input type="submit" name="sa" value="Search" />
+            </div>
+            </form>
+            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&lang=en"></script>
+          </div>
+          <script>navbar();</script>
+        </div>
+      </div>
+    </div>
+    <h2><a href=/>ubuntu man pages</a></h2>
+    <pre>
