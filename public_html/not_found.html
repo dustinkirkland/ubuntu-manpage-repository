@@ -4,30 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Ubuntu Manpages $title</title>
     <link rel="stylesheet" href="/ubuntu-book.css" type="text/css">
+    <script language="JavaScript" src="/functions.js"></script>
   </head>
   <body>
-<script language="JavaScript">
-function highlight(word) {
-	if (location.href.match("/" + word)) {
-		return("current");
-	} else {
-		return("plain");
-	}
-}
-function navbar() {
-	document.write("<ul>");
-	versions = new Array();
-	versions.push({"name":"dapper", "number":"6.06 LTS"});
-	versions.push({"name":"edgy", "number":"6.10"});
-	versions.push({"name":"feisty", "number":"7.04"});
-	versions.push({"name":"gutsy", "number":"7.10"});
-	versions.push({"name":"hardy", "number":"8.04 LTS"});
-	for (var i=0; i<versions.length; i++) {
-		document.write("<li id=" + highlight(versions[i]["name"]) + "><a href=/manpages/" + versions[i]["name"] + ">" + versions[i]["number"] + "</a></li>");
-	}
-	document.write("</ul>");
-}
-</script>
     <div xmlns="" id="mastwrap">
       <div id="masthead">
         <div id="sisternav">
@@ -46,8 +25,11 @@ function navbar() {
         </div>
       </div>
     </div>
-    <h2><a href=/>ubuntu man pages</a></h2><br>
+    <h2><a href=/>ubuntu man pages</a></h2>
     <h3>We could not find that man page</h3><br>
     <hr>
+    <p align=center>
+      Powered by the <a href=https://edge.launchpad.net/ubuntu-manpage-repository>Ubuntu Manpage Repository</a> generator
+    </p>
   </body>
 </html>
