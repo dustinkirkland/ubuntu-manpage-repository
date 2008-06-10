@@ -18,3 +18,5 @@ for dist in $DISTROS; do
 		done
 	done
 done
+
+./make-sitemaps.sh
