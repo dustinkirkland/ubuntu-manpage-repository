@@ -24,11 +24,11 @@ for ($i=0; $i<@stdin; $i++) {
 
 $save = $/;
 undef($/);
-open(FH, "above.html");
+open(FH, "../public_html/above.html");
 $above = <FH>;
 $above =~ s/\$title/$title/g;
 close(FH);
-open(FH, "below.html");
+open(FH, "../public_html/below.html");
 $below = <FH>;
 close(FH);
 $/ = $save;
