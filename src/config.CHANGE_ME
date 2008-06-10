@@ -1,0 +1,10 @@
+DEBDIR=/path/to/full/mirror
+
+PUBLIC_HTML_DIR="/path/to/public_html"
+MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
+
+SITE="http://ubuntu.example.com"
+
+DISTROS="intrepid hardy gutsy feisty dapper"
+REPOS="main restricted universe multiverse"
+ARCH="i386"
