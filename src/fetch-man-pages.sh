@@ -41,7 +41,7 @@ for i in $man; do
 	mkdir -p `dirname "$out"` > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
-	w3mman -l "$manpage" | ./mkhtml.pl > "$out"
+	w3mman -l "$manpage" | ./w3mman-to-html.pl > "$out"
 	if [ ! -s "$out" ]; then
 		# Remove if it's an empty file
 		rm -f "$out"
