@@ -7,6 +7,15 @@ if [ ! -d "$DESTDIR" -o ! -s "$DEB" ]; then
         exit 1
 fi
 
+#echo "INFO: Looking at package [$DEB]"
+name=`echo "$DEB" | sed "s/.*\///g" | sed "s/_.*//g"`
+cache_modtime=`(ls -l --time-style=+%s $DESTDIR/.cache/$name 2>/dev/null || echo "0 0 0 0 0 0") | awk '{print $6}'`
+deb_modtime=`ls -l --time-style=+%s "$DEB" | awk '{print $6}'`
+if [ "$cache_modtime" -ge "$deb_modtime" ]; then
+	#echo "INFO: Skipping package [$DEB]"
+	exit 1
+fi
+
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
@@ -29,15 +38,7 @@ for i in $man; do
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
-	if [ -s "$out" ]; then
-		out_modtime=`ls -l --time-style=+%s "$out" | awk '{print $6}'`
-		deb_modtime=`ls -l --time-style=+%s "$DEB" | awk '{print $6}'`
-		if [ $out_modtime -ge $deb_modtime ]; then
-			# Skip if the hosted manpage modtime is >= the deb's
-			# echo "INFO: Skipping manpage [$out]"
-			continue
-		fi
-	fi
+	touch $DESTDIR/.cache/$name
 	mkdir -p `dirname "$out"` > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
