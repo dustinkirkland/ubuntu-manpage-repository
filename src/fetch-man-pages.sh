@@ -1,18 +1,19 @@
 #!/bin/bash
 
-DESTDIR="$1"
-DEB="$2"
-if [ ! -d "$DESTDIR" -o ! -s "$DEB" ]; then
-        echo "Usage: $0 [/path/to/manpage/destination/] [/path/to/package.deb]" >&2
-        exit 1
-fi
+. ./config
 
-#echo "INFO: Looking at package [$DEB]"
-name=`echo "$DEB" | sed "s/.*\///g" | sed "s/_.*//g"`
-cache_modtime=`(ls -l --time-style=+%s $DESTDIR/.cache/$name 2>/dev/null || echo "0 0 0 0 0 0") | awk '{print $6}'`
-deb_modtime=`ls -l --time-style=+%s "$DEB" | awk '{print $6}'`
+DIST="$1"
+PKG="$2"
+
+DESTDIR="$PUBLIC_HTML_DIR/manpages/$DIST"
+DEB="$DEBDIR/$PKG"
+
+#echo "INFO: Looking at package [$PKG]"
+name=`basename "$PKG" | awk -F_ '{print $1}'`
+cache_modtime=`(ls -log --time-style=+%s $DESTDIR/.cache/$name 2>/dev/null || echo "0 0 0 0") | awk '{print $4}'`
+deb_modtime=`ls -log --time-style=+%s "$DEB" | awk '{print $4}'`
 if [ "$cache_modtime" -ge "$deb_modtime" ]; then
-	#echo "INFO: Skipping package [$DEB]"
+	#echo "INFO: Skipping non-updated package [$DEB]"
 	exit 1
 fi
 
@@ -20,7 +21,9 @@ fi
 man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
 	# Exit immediately if this package does not contain manpages
-	#echo "INFO: No manpages: [$DEB]"
+	echo "INFO: No manpages: [$DIST] [$PKG]"
+	# And touch the cache file so we don't look again until package updated
+	touch $DESTDIR/.cache/$name
 	exit 1
 fi
 
