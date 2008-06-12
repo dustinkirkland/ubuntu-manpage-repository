@@ -20,10 +20,10 @@ fi
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
-	# Exit immediately if this package does not contain manpages
 	echo "INFO: No manpages: [$DIST] [$PKG]"
-	# And touch the cache file so we don't look again until package updated
+	# Touch the cache file so we don't look again until package updated
 	touch $DESTDIR/.cache/$name
+	# Exit immediately if this package does not contain manpages
 	exit 1
 fi
 
@@ -41,17 +41,16 @@ for i in $man; do
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
-	touch $DESTDIR/.cache/$name
 	mkdir -p `dirname "$out"` > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
 	w3mman -l "$manpage" | ./w3mman-to-html.pl > "$out"
-	if [ ! -s "$out" ]; then
+	touch $DESTDIR/.cache/$name
+	if [ -s "$out" ]; then
+		echo "INFO: Created manpage [$out]"
+	else
 		# Remove if it's an empty file
 		rm -f "$out"
-	else
-		touch -r "$DEB" "$out"
-		echo "INFO: Created manpage [$out]"
 	fi
 done
 rm -rf "$TEMPDIR" 2>/dev/null || ( chmod -R 700 "$TEMPDIR" && rm -rf "$TEMPDIR" )
