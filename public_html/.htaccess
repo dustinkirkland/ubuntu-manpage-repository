@@ -1,6 +1,6 @@
 ErrorDocument 404 /not_found.html
 Options Indexes FollowSymLinks MultiViews ExecCGI Includes
-IndexOptions FancyIndexing IgnoreCase VersionSort SuppressHTMLPreamble
+IndexOptions FancyIndexing IgnoreCase VersionSort SuppressHTMLPreamble SuppressDescription SuppressSize SuppressLastModified
 DirectoryIndex "index_real.html"
 HeaderName /above.html
 ReadmeName /below.html
