@@ -8,13 +8,15 @@ PKG="$2"
 DESTDIR="$PUBLIC_HTML_DIR/manpages/$DIST"
 DESTDIRGZ="$PUBLIC_HTML_DIR/manpages.gz/$DIST"
 DEB="$DEBDIR/$PKG"
+NAME=`basename "$PKG" | awk -F_ '{print $1}'`
+
 
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
 	echo "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
-	touch $DESTDIR/.cache/$name
+	touch $DESTDIR/.cache/$NAME
 	# Exit immediately if this package does not contain manpages
 	exit 1
 fi
@@ -38,7 +40,7 @@ for i in $man; do
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
 	w3mman -l "$manpage" | ./w3mman-to-html.pl > "$out"
-	touch $DESTDIR/.cache/$name
+	touch $DESTDIR/.cache/$NAME
 	cp -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
 		echo "INFO: Created manpage [$out]"
