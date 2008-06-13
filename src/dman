@@ -1,6 +1,13 @@
 #!/bin/sh -e
 
-. /etc/lsb-release
+DISTRIB_CODENAME=
+if [ ! -z "$1" ] && [ "$1" = "-r" ] && [ ! -z "$2" ]; then
+    DISTRIB_CODENAME="$2"
+    shift || true
+    shift || true
+else
+    . /etc/lsb-release
+fi
 
 # LOCALE is blank for English, any other langue, use manpage code in 
 # /usr/share/man/* with a trailing slash, such as 'fr/', or 'ja/', or 'zh_CN'
