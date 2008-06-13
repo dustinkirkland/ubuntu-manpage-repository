@@ -1,7 +1,9 @@
 ErrorDocument 404 /not_found.html
-AddType text/html .html
-Options Indexes FollowSymLinks MultiViews
+Options Indexes FollowSymLinks MultiViews ExecCGI Includes
 IndexOptions FancyIndexing IgnoreCase VersionSort SuppressHTMLPreamble
 DirectoryIndex "index_real.html"
 HeaderName /above.html
 ReadmeName /below.html
+AddHandler cgi-script .py
+AddType text/html .html
+AddOutputFilter INCLUDES .html 
