@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ubuntu Manpages $title</title>
+    <title>Ubuntu Manpage Repository</title>
     <link rel="stylesheet" href="/ubuntu-book.css" type="text/css">
     <script language="JavaScript" src="/functions.js"></script>
   </head>
@@ -10,6 +10,7 @@
     <div xmlns="" id="mastwrap">
       <div id="masthead">
         <div id="sisternav">
+<!--
           <div>
             <form action="http://www.google.com/cse" id="cse-search-box">
             <div>
@@ -21,8 +22,15 @@
             </form>
             <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&lang=en"></script>
           </div>
+-->
+          <div>
+            <form method=get action=/search.py>
+              <input type=text name=title size=28 tabindex=1 />
+              <input type=submit value="Title Search" tabindex=2 />
+            </form>
+          </div>
           <script>navbar();</script>
         </div>
       </div>
     </div>
-    <h2><a href=/>ubuntu man pages</a></h2>
+    <h2><a href=/>man pages</a></h2>
