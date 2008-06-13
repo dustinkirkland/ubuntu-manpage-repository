@@ -8,15 +8,6 @@ PKG="$2"
 DESTDIR="$PUBLIC_HTML_DIR/manpages/$DIST"
 DEB="$DEBDIR/$PKG"
 
-#echo "INFO: Looking at package [$PKG]"
-name=`basename "$PKG" | awk -F_ '{print $1}'`
-cache_modtime=`(ls -log --time-style=+%s $DESTDIR/.cache/$name 2>/dev/null || echo "0 0 0 0") | awk '{print $4}'`
-deb_modtime=`ls -log --time-style=+%s "$DEB" | awk '{print $4}'`
-if [ "$cache_modtime" -ge "$deb_modtime" ]; then
-	#echo "INFO: Skipping non-updated package [$DEB]"
-	exit 1
-fi
-
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
