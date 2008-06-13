@@ -6,6 +6,7 @@ DIST="$1"
 PKG="$2"
 
 DESTDIR="$PUBLIC_HTML_DIR/manpages/$DIST"
+DESTDIRGZ="$PUBLIC_HTML_DIR/manpages.gz/$DIST"
 DEB="$DEBDIR/$PKG"
 
 #echo "INFO: Looking for manpages in [$DEB]"
@@ -27,16 +28,18 @@ for i in $man; do
 	manpage="$TEMPDIR/$i"
 	i=`echo $i | sed "s/usr\/share\/man\///"i | sed "s/\.gz$//" | sed "s/\.[0-9]$//"`
 	out="$DESTDIR"/"$i".html
+	outgz=`dirname "$DESTDIRGZ"/"$i"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
-	mkdir -p `dirname "$out"` > /dev/null
+	mkdir -p `dirname "$out"` "$outgz" > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
 	w3mman -l "$manpage" | ./w3mman-to-html.pl > "$out"
 	touch $DESTDIR/.cache/$name
+	cp -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
 		echo "INFO: Created manpage [$out]"
 	else
