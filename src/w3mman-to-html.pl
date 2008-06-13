@@ -22,19 +22,7 @@ for ($i=0; $i<@stdin; $i++) {
 	}
 }
 
-$save = $/;
-undef($/);
-open(FH, "../public_html/above.html");
-$above = <FH>;
-$above =~ s/\$title/$title/g;
-close(FH);
-open(FH, "../public_html/below.html");
-$below = <FH>;
-close(FH);
-$/ = $save;
-
-
-unshift(@stdin, $above);
-push(@stdin, $below);
+unshift(@stdin, '<!--#include virtual="/above.html" -->');
+push(@stdin, '<!--#include virtual="/below.html" -->');
 
 print("@stdin");
