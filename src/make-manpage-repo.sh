@@ -17,7 +17,7 @@ pkg_updated() {
 
 
 for dist in $DISTROS; do
-	mkdir -p $PUBLIC_HTML_DIR/manpages/$dist/.cache
+	mkdir -p $PUBLIC_HTML_DIR/manpages/$dist/.cache $PUBLIC_HTML_DIR/manpages.gz/$dist
 	for repo in $REPOS; do
 		DEBS=`cat $DEBDIR/dists/$dist/$repo/binary-$ARCH/Packages.gz | gunzip | grep "^Filename:.*\.deb$" | awk '{print $2}' | sort -u`
 		for deb in $DEBS; do
