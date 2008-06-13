@@ -22,7 +22,7 @@ for ($i=0; $i<@stdin; $i++) {
 	}
 }
 
-unshift(@stdin, '<!--#include virtual="/above.html" -->');
-push(@stdin, '<!--#include virtual="/below.html" -->');
+unshift(@stdin, '<!--#include virtual="/above.html" --><pre>');
+push(@stdin, '</pre><!--#include virtual="/below.html" -->');
 
 print("@stdin");
