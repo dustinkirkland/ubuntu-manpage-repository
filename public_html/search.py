@@ -23,10 +23,12 @@ descr = ["",								# 0
 get = cgi.FieldStorage()
 if get.has_key("title"):
 	t = get["title"].value
-	distros = ["intrepid", "hardy", "gutsy", "feisty", "dapper"]
+	versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
+	distros = versions.keys()
+	distros.sort()
 	html += "<table><tr>"
 	for d in distros:
-		html += "<th>" + d + "</th>"
+		html += "<th>%s<br><small>%s</small></th>" % (d, versions[d])
 	html += "<td>&nbsp;</td></tr>"
 	for i in range(1,10):
 		html += "<tr>"
