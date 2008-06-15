@@ -1,13 +1,19 @@
 #!/bin/sh -e
 
-DISTRIB_CODENAME=
-if [ ! -z "$1" ] && [ "$1" = "-r" ] && [ ! -z "$2" ]; then
-    DISTRIB_CODENAME="$2"
-    shift || true
-    shift || true
-else
-    . /etc/lsb-release
-fi
+. /etc/lsb-release
+while true; do
+	case "$1" in
+		-r)
+			DISTRIB_CODENAME="$2"
+			shift 2
+			;;
+		*)
+			break
+			;;
+	esac
+done
+PAGE=`echo "$@" | awk '{print $NF}'`
+MAN_ARGS=`echo "$@" | sed "s/\$PAGE$//"`
 
 # Mirror support of man's languages
 if [ ! -z "$LANG" ]; then
@@ -26,8 +32,8 @@ mandir=`mktemp -d dman.XXXXXX`
 trap "rm -rf $mandir" EXIT HUP INT QUIT TERM
 for i in `seq 1 9`; do
 	man="$mandir/$i"
-	if wget -O $man $URL/$DISTRIB_CODENAME/$LOCALE/man$i/$1.$i.gz 2>/dev/null; then
-		man -l $man || true
+	if wget -O $man $URL/$DISTRIB_CODENAME/$LOCALE/man$i/$PAGE.$i.gz 2>/dev/null; then
+		man $MAN_ARGS -l $man || true
 	fi
 	rm -f $man
 done
