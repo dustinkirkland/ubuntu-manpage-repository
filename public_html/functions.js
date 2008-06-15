@@ -1,3 +1,10 @@
+function distroAndSection() {
+	var str = location.href.replace(/^.*\/manpages\//, "");
+	str = str.replace(/\/.*man/, " ");
+	str = str.replace(/\/.*/, "");
+	str = str.replace(/.*:/, "");
+	document.write(" - " + str);
+}
 function highlight(word) {
         if (location.href.match("/" + word)) {
                 return("current");
