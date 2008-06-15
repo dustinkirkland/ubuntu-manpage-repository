@@ -7,3 +7,4 @@ ReadmeName /below.html
 AddHandler cgi-script .py
 AddType text/html .html
 AddOutputFilter INCLUDES .html 
+CheckSpelling On
