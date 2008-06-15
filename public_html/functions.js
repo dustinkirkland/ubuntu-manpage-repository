@@ -1,9 +1,16 @@
 function distroAndSection() {
-	var str = location.href.replace(/^.*\/manpages\//, "");
-	str = str.replace(/\/.*man/, " ");
-	str = str.replace(/\/.*/, "");
-	str = str.replace(/.*:/, "");
-	document.write(" - " + str);
+	var distro = location.href.replace(/^.*\/manpages\//, "");
+	distro = distro.replace(/\/.*$/, "");
+	distro = distro.replace(/^.*:/, "");
+	var section = location.href.replace(/^.*\/manpages\/.*\/man/, "");
+	section = section.replace(/\/.*$/, "");
+	section = section.replace(/^.*:/, "");
+	if (distro.length > 0) {
+		document.write(" - <a href=../>" + distro + "</a> ");
+		if (section.length > 0) {
+			document.write("(<a href=../man" + section + ">" + section + "</a>)");
+		}
+	}
 }
 function highlight(word) {
         if (location.href.match("/" + word)) {
