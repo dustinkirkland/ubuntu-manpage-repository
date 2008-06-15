@@ -3,7 +3,7 @@
 . /etc/lsb-release
 while true; do
 	case "$1" in
-		-r)
+		--release)
 			DISTRIB_CODENAME="$2"
 			shift 2
 			;;
