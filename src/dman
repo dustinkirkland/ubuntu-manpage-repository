@@ -9,16 +9,24 @@ else
     . /etc/lsb-release
 fi
 
-# LOCALE is blank for English, any other langue, use manpage code in 
-# /usr/share/man/* with a trailing slash, such as 'fr/', or 'ja/', or 'zh_CN'
-LOCALE=""
+# Mirror support of man's languages
+if [ ! -z "$LANG" ]; then
+	LOCALE="$LANG"
+fi
+if [ ! -z "$LC_MESSAGES" ]; then
+	LOCALE="$LC_MESSAGES"
+fi
+if echo $LOCALE | grep -q "^en"; then
+	LOCALE=""
+fi
+
 URL="http://ubuntu.dustinkirkland.com/manpages.gz/"
 
 mandir=`mktemp -d dman.XXXXXX`
 trap "rm -rf $mandir" EXIT HUP INT QUIT TERM
 for i in `seq 1 9`; do
 	man="$mandir/$i"
-	if wget -O $man $URL/$DISTRIB_CODENAME/man$i/$1.$i.gz 2>/dev/null; then
+	if wget -O $man $URL/$DISTRIB_CODENAME/$LOCALE/man$i/$1.$i.gz 2>/dev/null; then
 		man -l $man || true
 	fi
 	rm -f $man
