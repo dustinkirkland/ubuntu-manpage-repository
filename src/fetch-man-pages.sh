@@ -9,6 +9,7 @@ DESTDIR="$PUBLIC_HTML_DIR/manpages/$DIST"
 DESTDIRGZ="$PUBLIC_HTML_DIR/manpages.gz/$DIST"
 DEB="$DEBDIR/$PKG"
 NAME=`basename "$PKG" | awk -F_ '{print $1}'`
+NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
 
 
 #echo "INFO: Looking for manpages in [$DEB]"
@@ -39,7 +40,7 @@ for i in $man; do
 	mkdir -p `dirname "$out"` "$outgz" > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
-	w3mman -l "$manpage" | ./w3mman-to-html.pl > "$out"
+	w3mman -l "$manpage" | ./w3mman-to-html.pl $NAME_AND_VER > "$out"
 	touch $DESTDIR/.cache/$NAME
 	cp -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
