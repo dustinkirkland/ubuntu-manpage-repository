@@ -23,16 +23,18 @@
 
 
 function distroAndSection() {
-	var distro = location.href.replace(/^.*\/manpages\//, "");
-	distro = distro.replace(/\/.*$/, "");
-	distro = distro.replace(/^.*:/, "");
-	var section = location.href.replace(/^.*\/manpages\/.*\/man/, "");
-	section = section.replace(/\/.*$/, "");
-	section = section.replace(/^.*:/, "");
+	var distro = location.href.split("/")[4];
+	var section = location.href.split("/")[5];
+	section = section.replace(/^man/, "");
+	if (!(section >= 1 && section <= 9)) {
+		section = location.href.split("/")[6];
+		section = section.replace(/^man/, "");
+		var lang = location.href.split("/")[5];
+	}
 	if (distro.length > 0) {
-		document.write(" - <a href=../>" + distro + "</a> ");
+		document.write(" - <a href=\"../\">" + distro + "</a> ");
 		if (section.length > 0) {
-			document.write("(<a href=../man" + section + ">" + section + "</a>)");
+			document.write("(<a href=\"../man" + section + "\">" + section + "</a>)");
 		}
 	}
 }
