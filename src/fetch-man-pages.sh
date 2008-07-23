@@ -30,13 +30,13 @@ for i in $man; do
 	i=`echo "$i" | sed "s/.*\.\///"`
 	manpage="$TEMPDIR/$i"
 	i=`echo $i | sed "s/usr\/share\/man\///"i | sed "s/\.gz$//" | sed "s/\.[0-9]$//"`
-	out="$DESTDIR"/"$i".html
-	outgz=`dirname "$DESTDIRGZ"/"$i"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
+	out="$DESTDIR"/"$i".html
+	outgz=`dirname "$DESTDIRGZ"/"$i"`
 	mkdir -p `dirname "$out"` "$outgz" > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
