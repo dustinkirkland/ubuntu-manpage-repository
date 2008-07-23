@@ -32,7 +32,7 @@ use CGI qw/escapeHTML/;
 my @stdin = <STDIN>;
 shift(@stdin);
 shift(@stdin);
-my $title = "Ubuntu Manpage - " . escapeHTML($stdin[1]);
+my $title = escapeHTML($stdin[1]);
 
 for (my $i=0; $i<@stdin; $i++) {
 	$stdin[$i] =~ s/</&lt;/g;
@@ -55,7 +55,9 @@ my $pkg = $ARGV[0];
 my $pkg_name = $ARGV[0];
 $pkg_name =~ s/_.*$//g;
 
-unshift(@stdin, '<!--#include virtual="/above.html" -->Provided by: <a href=http://launchpad.net/ubuntu/+source/' . $pkg_name . '>' . $pkg . '</a><pre>');
+unshift(@stdin, '<!--#include virtual="/above2.html" -->Provided by: ' . $pkg . '<pre>');
+unshift(@stdin, $title);
+unshift(@stdin, '<!--#include virtual="/above1.html" -->');
 push(@stdin, '</pre><!--#include virtual="/below.html" -->');
 
 print("@stdin");
