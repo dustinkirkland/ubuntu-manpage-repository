@@ -29,7 +29,7 @@ for i in $man; do
 	#echo "INFO: Considering entry [$i]"
 	i=`echo "$i" | sed "s/.*\.\///"`
 	manpage="$TEMPDIR/$i"
-	i=`echo $i | sed "s/usr\/share\/man\///"i | sed "s/\.gz$//" | sed "s/\.[0-9]$//"`
+	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.gz$//" | sed "s/\.[0-9]$//"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
@@ -40,7 +40,7 @@ for i in $man; do
 	mkdir -p `dirname "$out"` "$outgz" > /dev/null
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
-	w3mman -l "$manpage" | ./w3mman-to-html.pl $NAME_AND_VER > "$out"
+	w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" > "$out"
 	touch $DESTDIR/.cache/$NAME
 	cp -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
