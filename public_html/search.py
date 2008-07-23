@@ -39,8 +39,6 @@ if get.has_key("title"):
 		html += "<td>(%d) - <small>%s</small></td></tr>" % (i, descr[i])
 	html += "</table>"
 
-f = open("below.html")
-html += f.read()
-f.close
+html += open("below.html").read()
 
 print html
