@@ -56,7 +56,7 @@ handle_deb() {
 
 for dist in $DISTROS; do
 	export dist
-	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/.cache $PUBLIC_HTML_DIR/manpages.gz/$dist"
+	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/.cache" "$PUBLIC_HTML_DIR/manpages.gz/$dist"
 	for repo in $REPOS; do
 		zcat "$DEBDIR/dists/$dist/$repo/binary-$ARCH/Packages.gz" | grep "^Filename:.*\.deb$" | awk '{print $2}' | sort -u | \
 			while read deb; do
