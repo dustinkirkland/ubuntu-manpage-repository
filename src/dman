@@ -32,8 +32,8 @@ mandir=`mktemp -d dman.XXXXXX`
 trap "rm -rf $mandir" EXIT HUP INT QUIT TERM
 for i in `seq 1 9`; do
 	man="$mandir/$i"
-	if wget -O $man $URL/$DISTRIB_CODENAME/$LOCALE/man$i/$PAGE.$i.gz 2>/dev/null; then
-		man $MAN_ARGS -l $man || true
+	if wget -O "$man" "$URL/$DISTRIB_CODENAME/$LOCALE/man$i/$PAGE.$i.gz" 2>/dev/null; then
+		man $MAN_ARGS -l "$man" || true
 	fi
-	rm -f $man
+	rm -f "$man"
 done
