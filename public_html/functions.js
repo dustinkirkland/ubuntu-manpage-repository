@@ -54,7 +54,7 @@ function navbar() {
         versions.push({"name":"hardy", "number":"8.04 LTS"});
         versions.push({"name":"intrepid", "number":"8.10"});
         for (var i=0; i<versions.length; i++) {
-                document.write("<li id=" + highlight(versions[i]["name"]) + "><a href=/manpages/" + versions[i]["name"] + ">" + versions[i]["number"] + "</a></li>");
+                document.write("<li id=\"" + highlight(versions[i]["name"]) + "\"><a href=\"/manpages/" + versions[i]["name"] + "\">" + versions[i]["number"] + "</a></li>");
         }
         document.write("</ul>");
 }
