@@ -13,7 +13,7 @@ NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
 
 
 #echo "INFO: Looking for manpages in [$DEB]"
-man=`dpkg-deb -c "$DEB" | egrep "\./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
+man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
 	echo "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
