@@ -19,7 +19,7 @@ if [ -z "$man" ]; then
 	# Touch the cache file so we don't look again until package updated
 	touch $DESTDIR/.cache/$NAME
 	# Exit immediately if this package does not contain manpages
-	exit 1
+	exit 0
 fi
 
 #echo "INFO: Extracting manpages from [$DEB]"
