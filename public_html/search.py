@@ -5,9 +5,7 @@ import os
 
 html = "Content-Type: text/html\n\n" 
 
-f = open("above.html")
-html += f.read()
-f.close
+html += open("above.html").read()
 
 descr = ["",								# 0
 	"Executable programs or shell commands",			# 1
