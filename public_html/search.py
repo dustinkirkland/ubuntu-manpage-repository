@@ -30,7 +30,9 @@ import os
 
 html = "Content-Type: text/html\n\n" 
 
-html += open("above.html").read()
+html += open("above1.html").read()
+html += "Searching"
+html += open("above2.html").read()
 
 descr = ["",								# 0
 	"Executable programs or shell commands",			# 1
