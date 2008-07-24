@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 ###############################################################################
 # This is the Ubuntu manpage repository generator and interface.
@@ -50,13 +50,13 @@ pkg_updated() {
 handle_deb() {
 	dist="$1"
 	deb="$2"
-	pkg_updated "$deb" && ./fetch-man-pages.sh "$dist" "$deb"
+	pkg_updated "$deb" && ./fetch-man-pages.sh "$dist" "$deb" || true
 }
 
 
 for dist in $DISTROS; do
 	export dist
-	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/.cache" "$PUBLIC_HTML_DIR/manpages.gz/$dist"
+	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/.cache" "$PUBLIC_HTML_DIR/manpages.gz/$dist" || true
 	for repo in $REPOS; do
 		zcat "$DEBDIR/dists/$dist/$repo/binary-$ARCH/Packages.gz" | grep "^Filename:.*\.deb$" | awk '{print $2}' | sort -u | \
 			while read deb; do
