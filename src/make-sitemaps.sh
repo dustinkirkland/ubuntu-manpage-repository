@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 ###############################################################################
 # This is the Ubuntu manpage repository generator and interface.
