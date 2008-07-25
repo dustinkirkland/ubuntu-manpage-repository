@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 ###############################################################################
 # This is the Ubuntu manpage repository generator and interface.
@@ -62,11 +62,11 @@ for i in $man; do
 	fi
 	out="$DESTDIR"/"$i".html
 	outgz=`dirname "$DESTDIRGZ"/"$i"`
-	mkdir -p `dirname "$out"` "$outgz" > /dev/null
+	mkdir -p `dirname "$out"` "$outgz" > /dev/null || true
 	#man "$manpage" 2>/dev/null | col -b > "$out".txt
 	#man2html -r "$manpage" > "$out"
 	w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" > "$out"
-	touch $DESTDIR/.cache/$NAME
+	touch "$DESTDIR/.cache/$NAME"
 	cp -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
 		echo "INFO: Created manpage [$out]"
@@ -75,5 +75,5 @@ for i in $man; do
 		rm -f "$out"
 	fi
 done
-rm -rf "$TEMPDIR" 2>/dev/null || ( chmod -R 700 "$TEMPDIR" && rm -rf "$TEMPDIR" )
+rm -rf "$TEMPDIR" 2>/dev/null || ( chmod -R 700 "$TEMPDIR" && rm -rf "$TEMPDIR" ) || true
 exit 0
