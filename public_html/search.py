@@ -27,6 +27,7 @@
 
 import cgi
 import os
+import re
 
 html = "Content-Type: text/html\n\n" 
 
@@ -46,8 +47,10 @@ descr = ["",								# 0
 	"Kernel routines [Non standard]"]				# 9
 
 get = cgi.FieldStorage()
+p = re.compile( '[^a-zA-Z0-9\/_\:\+@-]' );
 if get.has_key("title"):
 	t = get["title"].value
+	t = p.sub('', t)
 	versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
 	distros = versions.keys()
 	distros.sort()
