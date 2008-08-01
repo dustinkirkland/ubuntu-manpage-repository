@@ -67,7 +67,7 @@ for i in $man; do
 	#man2html -r "$manpage" > "$out"
 	w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" > "$out"
 	touch "$DESTDIR/.cache/$NAME"
-	cp -f "$manpage" "$outgz"
+	mv -f "$manpage" "$outgz"
 	if [ -s "$out" ]; then
 		echo "INFO: Created manpage [$out]"
 	else
@@ -75,5 +75,6 @@ for i in $man; do
 		rm -f "$out"
 	fi
 done
+# In the case of freakish package permissions, fix them on rm failure.
 rm -rf "$TEMPDIR" 2>/dev/null || ( chmod -R 700 "$TEMPDIR" && rm -rf "$TEMPDIR" ) || true
 exit 0
