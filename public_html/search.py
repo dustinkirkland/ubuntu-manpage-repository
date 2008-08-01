@@ -63,7 +63,7 @@ if get.has_key("title"):
 		for d in distros:
 			path = "manpages/%s/man%d/%s.html" % (d, i, t)
 			if os.path.isfile(path):
-				html += "<td><a href=%s>%s(%d)</a></td>" % (path, t, i)
+				html += '<td><a href="%s">%s(%d)</a></td>' % (path, t, i)
 			else:
 				html += "<td align=center>.</td>"
 		html += "<td>(%d) - <small>%s</small></td></tr>" % (i, descr[i])
