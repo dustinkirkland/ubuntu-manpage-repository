@@ -65,4 +65,4 @@ for dist in $DISTROS; do
 	done
 done
 
-#./make-sitemaps.sh
+./make-sitemaps.sh
