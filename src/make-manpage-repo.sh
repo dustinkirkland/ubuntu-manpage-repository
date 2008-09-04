@@ -25,8 +25,18 @@
 # License can be found in /usr/share/common-licenses/GPL-3
 ###############################################################################
 
-
 . ./config
+
+# Establish some locking, to keep multiple updates from running
+LOCK="$PUBLIC_HTML_DIR/UPDATE_IN_PROGRESS"
+if [ -e "$LOCK" ]; then
+	echo "ERROR: Update is currently running"
+	echo "Lock: $LOCK"
+	cat "$LOCK"
+	exit 1
+fi
+trap "rm -f $LOCK 2>/dev/null || true" EXIT HUP INT QUIT TERM
+date > $LOCK
 
 FORCE="$1"
 
