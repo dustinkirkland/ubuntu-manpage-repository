@@ -31,9 +31,9 @@ import re
 
 html = "Content-Type: text/html\n\n" 
 
-html += open("above1.html").read()
+html += open("../above1.html").read()
 html += "Searching"
-html += open("above2.html").read()
+html += open("../above2.html").read()
 
 descr = ["",								# 0
 	"Executable programs or shell commands",			# 1
@@ -61,7 +61,7 @@ if get.has_key("title"):
 	for i in range(1,10):
 		html += "<tr>"
 		for d in distros:
-			path = "manpages/%s/man%d/%s.html" % (d, i, t)
+			path = "../manpages/%s/man%d/%s.html" % (d, i, t)
 			if os.path.isfile(path):
 				html += '<td><a href="%s">%s(%d)</a></td>' % (path, t, i)
 			else:
@@ -69,6 +69,6 @@ if get.has_key("title"):
 		html += "<td>(%d) - <small>%s</small></td></tr>" % (i, descr[i])
 	html += "</table>"
 
-html += open("below.html").read()
+html += open("../below.html").read()
 
 print html
