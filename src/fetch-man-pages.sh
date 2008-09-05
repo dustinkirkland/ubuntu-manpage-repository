@@ -38,9 +38,9 @@ NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
 
 
 #echo "INFO: Looking for manpages in [$DEB]"
-man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9]\.gz$" | sed "s/^.*\.\//\.\//"`
+man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//"`
 if [ -z "$man" ]; then
-	echo "INFO: No manpages: [$DIST] [$PKG]"
+	#echo "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
 	touch $DESTDIR/.cache/$NAME
 	# Exit immediately if this package does not contain manpages
@@ -54,7 +54,7 @@ for i in $man; do
 	#echo "INFO: Considering entry [$i]"
 	i=`echo "$i" | sed "s/.*\.\///"`
 	manpage="$TEMPDIR/$i"
-	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.gz$//" | sed "s/\.[0-9]$//"`
+	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.[0-9][a-zA-Z0-9\.\-]*\.gz$//"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
