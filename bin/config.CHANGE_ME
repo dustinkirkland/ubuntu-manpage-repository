@@ -2,7 +2,7 @@
 
 DEBDIR=/path/to/full/mirror
 
-PUBLIC_HTML_DIR="/path/to/public_html"
+PUBLIC_HTML_DIR="/path/to/www"
 MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
 
 SITE="http://ubuntu.example.com"
