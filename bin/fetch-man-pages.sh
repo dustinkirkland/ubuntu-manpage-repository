@@ -64,7 +64,7 @@ for i in $man; do
 	manpage="$TEMPDIR/$i"
 	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.[0-9][a-zA-Z]*\.gz$//"`
 	#echo "INFO: Considering manpage [$i]"
-	if [ "$SYMLINK" = "0" -a ! -s "$manpage" -o -z "$i" ]; then
+	if [ ! -s "$manpage" -o -z "$i" ] && [ "$SYMLINK" = "0" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
