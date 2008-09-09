@@ -29,6 +29,9 @@ import cgi
 import os
 import re
 
+# You may need to uncomment and edit this line in your environment
+#os.chdir("/srv/manpages.ubuntu.com/www")
+
 html = "Content-Type: text/html\n\n" 
 
 html += open("../www/above1.html").read()
