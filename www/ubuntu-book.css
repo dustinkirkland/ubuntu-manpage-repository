@@ -225,3 +225,6 @@ h5, h6 {font-size: 1em;}
 
 #sisternav a , #sisternav #current a { color: #444; }
 #sisternav #current a:hover, #sisternav li a:hover { color: black;}
+
+div.floatmenu {  margin: 0;  position: fixed;
+  top: 120px;  left: auto;  width: auto;  right: 20px; border-top: 2px; }
