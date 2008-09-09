@@ -61,13 +61,15 @@ if get.has_key("title"):
 	for i in range(1,10):
 		html += "<tr>"
 		for d in distros:
+			color = "lightgrey"
 			path = "../www/manpages/%s/man%d/%s.html" % (d, i, t)
 			href_path = "/manpages/%s/man%d/%s.html" % (d, i, t)
 			if os.path.isfile(path):
+				color = "black"
 				html += '<td><a href="%s">%s(%d)</a></td>' % (href_path, t, i)
 			else:
 				html += "<td align=center>.</td>"
-		html += "<td>(%d) - <small>%s</small></td></tr>" % (i, descr[i])
+		html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
 	html += "</table>"
 
 html += open("../www/below.html").read()
