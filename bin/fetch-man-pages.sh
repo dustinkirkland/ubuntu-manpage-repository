@@ -38,7 +38,7 @@ NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
 
 
 #echo "INFO: Looking for manpages in [$DEB]"
-man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//"`
+man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
 if [ -z "$man" ]; then
 	#echo "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
@@ -52,25 +52,37 @@ TEMPDIR=`mktemp -d -t doc-XXXXXX`
 dpkg-deb -x "$DEB" "$TEMPDIR"
 for i in $man; do
 	#echo "INFO: Considering entry [$i]"
-	i=`echo "$i" | sed "s/.*\.\///"`
+	i=`echo "$i" | sed "s/^.*\.\///"`
+	if echo "$i" | grep -qs "\->"; then
+		SYMLINK=1
+		symlink_src_html=`echo "$i" | sed "s/^.*\->//" | sed "s/\.[0-9][a-zA-Z]*\.gz$/\.html/"`
+		i=`echo "$i" | sed "s/\->.*$//" `
+		#echo "INFO: [$i] is a symbolic link"
+	else
+		SYMLINK=0
+	fi
 	manpage="$TEMPDIR/$i"
-	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.[0-9][a-zA-Z0-9\.\-]*\.gz$//"`
+	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.[0-9][a-zA-Z]*\.gz$//"`
 	#echo "INFO: Considering manpage [$i]"
-	if [ ! -s "$manpage" -o -z "$i" ]; then
+	if [ "$SYMLINK" = "0" -a ! -s "$manpage" -o -z "$i" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
 	out="$DESTDIR"/"$i".html
 	outgz=`dirname "$DESTDIRGZ"/"$i"`
 	mkdir -p `dirname "$out"` "$outgz" > /dev/null || true
-	#man "$manpage" 2>/dev/null | col -b > "$out".txt
-	#man2html -r "$manpage" > "$out"
-	w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" > "$out"
-	touch "$DESTDIR/.cache/$NAME"
-	mv -f "$manpage" "$outgz"
-	if [ -s "$out" ]; then
-		echo "INFO: Created manpage [$out]"
+	if [ "$SYMLINK" = "1" ]; then
+		ln -f -s "$symlink_src_html" "$out"
+		echo "INFO: Created symlink [$out]"
 	else
+		#man "$manpage" 2>/dev/null | col -b > "$out".txt
+		#man2html -r "$manpage" > "$out"
+		w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" > "$out"
+		echo "INFO: Created manpage [$out]"
+	fi
+	mv -f "$manpage" "$outgz"
+	touch "$DESTDIR/.cache/$NAME"
+	if [ ! -s "$out" ]; then
 		# Remove if it's an empty file
 		rm -f "$out"
 	fi
