@@ -63,10 +63,32 @@ handle_deb() {
 	pkg_updated "$deb" && ./fetch-man-pages.sh "$dist" "$deb" || true
 }
 
+link_en_locale() {
+	dist="$1"
+	for i in `seq 1 9`; do
+		dir="$PUBLIC_HTML_DIR/manpages/$dist/en/man$i"
+		if [ -L "$dir" ]; then
+			# link exists: we're good
+			continue
+		elif [ -d "$dir" ]; then
+			# dir exists: mv, ln, restore
+			mv -f "$dir" "$dir.bak"
+			ln -s "../man$i" "$dir"
+			mv -f "$dir.bak"/* "$dir"
+			rmdir "$dir.bak"
+		else
+			# link does not exist: establish the link
+			ln -s "../man$i" "$dir"
+		fi
+	done
+	return 0
+}
+
 
 for dist in $DISTROS; do
 	export dist
 	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/.cache" "$PUBLIC_HTML_DIR/manpages.gz/$dist" || true
+	link_en_locale "$dist"
 	for repo in $REPOS; do
 		zcat "$DEBDIR/dists/$dist/$repo/binary-$ARCH/Packages.gz" | grep "^Filename:.*\.deb$" | awk '{print $2}' | sort -u | \
 			while read deb; do
