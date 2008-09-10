@@ -52,7 +52,7 @@ if echo $LOCALE | grep -q "^en"; then
 	LOCALE=""
 fi
 
-URL="http://ubuntu.dustinkirkland.com/manpages.gz/"
+URL="http://manpages.ubuntu.com/manpages.gz/"
 
 mandir=`mktemp -d dman.XXXXXX`
 trap "rm -rf $mandir" EXIT HUP INT QUIT TERM
