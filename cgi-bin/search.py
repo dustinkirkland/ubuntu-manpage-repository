@@ -30,7 +30,7 @@ import os
 import re
 
 # You may need to uncomment and edit this line in your environment
-#os.chdir("/srv/manpages.ubuntu.com/www")
+os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
 
 html = "Content-Type: text/html\n\n" 
 
@@ -57,10 +57,10 @@ if get.has_key("title"):
 	versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
 	distros = versions.keys()
 	distros.sort()
-	html += "<table><tr>"
+	html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
 	for d in distros:
-		html += "<th>%s<br><small>%s</small></th>" % (d, versions[d])
-	html += "<td>&nbsp;</td></tr>"
+		html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
+	html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
 	for i in range(1,10):
 		html += "<tr>"
 		for d in distros:
@@ -69,11 +69,11 @@ if get.has_key("title"):
 			href_path = "/manpages/%s/man%d/%s.html" % (d, i, t)
 			if os.path.isfile(path):
 				color = "black"
-				html += '<td><a href="%s">%s(%d)</a></td>' % (href_path, t, i)
+				html += '<td><a href="%s" style="text-decoration:none">%s(%d)</a></td>' % (href_path, t, i)
 			else:
 				html += "<td align=center>.</td>"
 		html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
-	html += "</table>"
+	html += "</table></td></tr></table><br>"
 
 html += open("../www/below.html").read()
 
