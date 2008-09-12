@@ -59,6 +59,22 @@ function navbar() {
         document.write("</ul>");
 }
 
+// See: http://developer.mozilla.org/en/docs/Adding_search_engines_from_web_pages
+function installSearchEngine() {
+	if (window.external && ("AddSearchProvider" in window.external)) {
+		// Firefox 2 and IE 7, OpenSearch
+		window.external.AddSearchProvider("http://manpages.ubuntu.com/ubuntu-manpage-search.xml");
+	} else if (window.sidebar && ("addSearchEngine" in window.sidebar)) {
+		// Firefox <= 1.5, Sherlock
+		window.sidebar.addSearchEngine("http://http://manpages.ubuntu.com/ubuntu-manpage-search.src",
+		"http://manpages.ubuntu.com/ubuntu-manpage-search.png",
+		"Ubuntu Manpages", "");
+	} else {
+		// No search engine support (IE 6, Opera, etc).
+		alert("No search engine plugin support is available for this browser");
+	}
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // This script was written By Brady Mulhollem - WebTech101.com

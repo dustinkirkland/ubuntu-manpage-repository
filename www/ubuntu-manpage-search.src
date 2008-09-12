@@ -1,0 +1,10 @@
+<search
+ name="Ubuntu Manpages"
+ method="GET"
+ action="http://manpages.ubuntu.com/cgi-bin/search.py"
+ queryCharset="utf-8"
+>
+
+  <input name="title" user>
+</search>
+
