@@ -34,6 +34,7 @@ os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
 
 html = "Content-Type: text/html\n\n" 
 
+html += "<script>this.no_toc = '1';</script>"
 html += open("../www/above1.html").read()
 html += "Searching"
 html += open("../www/above2.html").read()
