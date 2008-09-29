@@ -38,7 +38,14 @@ html += open("../www/above1.html").read()
 html += "Searching"
 html += open("../www/above2.html").read()
 
-descr = ["",								# 0
+get = cgi.FieldStorage()
+
+if get.has_key("text"):
+	# Google Custom Search Engine results (full text search)
+	html += '<div id="cse-search-results"></div> <script type="text/javascript"> var googleSearchIframeName = "cse-search-results"; var googleSearchFormName = "cse-search-box"; var googleSearchFrameWidth = 600; var googleSearchDomain = "www.google.com"; var googleSearchPath = "/cse"; var googleSearchResizeIframe = false; </script> <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>'
+else:
+	# Title only (file name match search)
+	descr = ["",							# 0
 	"Executable programs or shell commands",			# 1
 	"System calls (functions provided by the kernel)",		# 2
 	"Library calls (functions within program libraries)",		# 3
@@ -49,32 +56,35 @@ descr = ["",								# 0
 	"System administration commands (usually only for root)",	# 8
 	"Kernel routines [Non standard]"]				# 9
 
-get = cgi.FieldStorage()
-p = re.compile( '[^a-zA-Z0-9\/_\:\+@-]' );
-if get.has_key("title"):
-	t = get["title"].value
-	t = p.sub('', t)
-	versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
-	distros = versions.keys()
-	distros.sort()
-	html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
-	for d in distros:
-		html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
-	html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
-	for i in range(1,10):
-		html += "<tr>"
+	p = re.compile( '[^a-zA-Z0-9\/_\:\+@-]' );
+	t = ""
+	if get.has_key("title"):
+		t = get["title"].value
+	elif get.has_key("q"):
+		t = get["q"].value
+	if t != "":
+		t = p.sub('', t)
+		versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
+		distros = versions.keys()
+		distros.sort()
+		html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
 		for d in distros:
-			color = "lightgrey"
-			path = "../www/manpages/%s/man%d/%s.html" % (d, i, t)
-			href_path = "/manpages/%s/man%d/%s.html" % (d, i, t)
-			if os.path.isfile(path):
-				color = "black"
-				html += '<td><a href="%s" style="text-decoration:none">%s(%d)</a></td>' % (href_path, t, i)
-			else:
-				html += "<td align=center>.</td>"
-		html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
-	html += "</table></td></tr></table><br>"
+			html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
+		html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
+		for i in range(1,10):
+			html += "<tr>"
+			for d in distros:
+				color = "lightgrey"
+				path = "../www/manpages/%s/man%d/%s.html" % (d, i, t)
+				href_path = "/manpages/%s/man%d/%s.html" % (d, i, t)
+				if os.path.isfile(path):
+					color = "black"
+					html += '<td><a href="%s" style="text-decoration:none">%s(%d)</a></td>' % (href_path, t, i)
+				else:
+					html += "<td align=center>.</td>"
+			html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
+		html += "</table></td></tr></table><br>"
+
 
 html += open("../www/below.html").read()
-
 print html
