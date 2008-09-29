@@ -49,6 +49,18 @@ body {
 	height: 90px;
 }
 
+#mastheadlinked a {
+	display: block;
+	height: 90px;
+	width: 454px;
+	z-index: 1000;
+	text-decoration: none;
+}
+
+#mastheadlinked span {
+	visibility: hidden;
+}
+
 ul {
 	margin-left: 5px;
 }
