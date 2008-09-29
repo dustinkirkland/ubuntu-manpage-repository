@@ -23,10 +23,6 @@
 
 
 function distroAndSection() {
-	if (this.no_toc == '1') {
-		return 0;
-	}
-	document.write("<a href='/'>man pages</a>");
 	var distro = location.href.split("/")[4];
 	var section = location.href.split("/")[5];
 	section = section.replace(/^man/, "");
@@ -36,7 +32,7 @@ function distroAndSection() {
 		var lang = location.href.split("/")[5];
 	}
 	if (distro.length > 0) {
-		document.write(" - <a href=\"../\">" + distro + "</a> ");
+		document.write("<a href=\"../\">" + distro + "</a> ");
 		if (section.length > 0) {
 			document.write("(<a href=\"../man" + section + "\">" + section + "</a>)");
 		}
@@ -91,9 +87,8 @@ function installSearchEngine() {
 // This script was written By Brady Mulhollem - WebTech101.com
 // http://www.webtech101.com/Javascript/toc-generator
 
-if (this.no_toc != '1') {
-	window.onload = function(){new tocGen('top','toc')};
-}
+window.onload = function(){new tocGen('top','toc')};
+
 function tocGen(id,writeTo){
 	this.id = id;
 	this.num = 0;
