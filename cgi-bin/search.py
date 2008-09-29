@@ -64,6 +64,7 @@ else:
 	elif get.has_key("q"):
 		t = get["q"].value
 	if t != "":
+		html += "<script>document.forms[0].q.value='" + t + "';</script>"
 		t = p.sub('', t)
 		versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
 		distros = versions.keys()
