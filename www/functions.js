@@ -23,6 +23,10 @@
 
 
 function distroAndSection() {
+	if (this.no_toc == '1') {
+		return 0;
+	}
+	document.write("<a href='/'>man pages</a>");
 	var distro = location.href.split("/")[4];
 	var section = location.href.split("/")[5];
 	section = section.replace(/^man/, "");
@@ -86,7 +90,10 @@ function installSearchEngine() {
 /////////////////////////////////////////////////////////////////////////////////////
 // This script was written By Brady Mulhollem - WebTech101.com
 // http://www.webtech101.com/Javascript/toc-generator
-window.onload = function(){new tocGen('top','toc')};
+
+if (this.no_toc != '1') {
+	window.onload = function(){new tocGen('top','toc')};
+}
 function tocGen(id,writeTo){
 	this.id = id;
 	this.num = 0;
