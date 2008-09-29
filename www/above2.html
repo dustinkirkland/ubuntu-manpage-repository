@@ -7,30 +7,24 @@
     <div xmlns="" id="mastwrap">
       <div id="masthead">
         <div id="sisternav">
-<!--
           <div>
-            <form action="http://www.google.com/cse" id="cse-search-box">
-            <div>
-              <input type="hidden" name="cx" value="003883529982892832976:5zl6o8w6f0s" />
-              <input type="hidden" name="ie" value="UTF-8" />
-              <input type="text" name="q" size="31" />
-              <input type="submit" name="sa" value="Search" />
-            </div>
+            <form method="get" action="/cgi-bin/search.py" id="cse-search-box">
+              <div>
+                <input type="hidden" name="cx" value="003883529982892832976:5zl6o8w6f0s" />
+		<input type="hidden" name="cof" value="FORID:9" />
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="text" name="q" size="26" tabindex="1" />
+                <input type="submit" value="Titles" tabindex="2" name="titles" />
+                <input type="submit" value="Text" tabindex="3" name="text" />
+              </div>
             </form>
             <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&lang=en"></script>
-          </div>
--->
-          <div>
-            <form method="get" action="/cgi-bin/search.py">
-              <input type="text" name="title" size="28" tabindex="1" />
-              <input type="submit" value="Title Search" tabindex="2" />
-            </form>
           </div>
           <script>navbar();</script>
         </div>
       </div>
     </div>
-    <h2><a href="/">man pages</a><script>distroAndSection();</script></h2>
+    <script>distroAndSection();</script>
     <div class="floatmenu" id="toc"></div>
     <div id="top">
 
