@@ -57,7 +57,7 @@ else:
 	"System administration commands (usually only for root)",	# 8
 	"Kernel routines [Non standard]"]				# 9
 
-	p = re.compile( '[^a-zA-Z0-9\/_\:\+@-]' );
+	p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 	t = ""
 	if get.has_key("title"):
 		t = get["title"].value
