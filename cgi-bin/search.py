@@ -34,7 +34,6 @@ os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
 
 html = "Content-Type: text/html\n\n" 
 
-html += "<script>this.no_toc = '1';</script>"
 html += open("../www/above1.html").read()
 html += "Searching"
 html += open("../www/above2.html").read()
@@ -57,7 +56,6 @@ else:
 	"System administration commands (usually only for root)",	# 8
 	"Kernel routines [Non standard]"]				# 9
 
-	p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 	t = ""
 	if get.has_key("title"):
 		t = get["title"].value
@@ -65,7 +63,20 @@ else:
 		t = get["q"].value
 	if t != "":
 		html += "<script>document.forms[0].q.value='" + t + "';</script>"
+		p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 		t = p.sub('', t)
+
+		if get.has_key("lr"):
+			lr = get["lr"].value
+			p = re.compile( '^lang_' );
+			lr = p.sub('', lr)
+			p = re.compile( '[^a-zA-Z-]' );
+			lr = p.sub('', lr)
+			p = re.compile( '[-]' );
+			lr = p.sub('_', lr)
+		else:
+			lr = "en"
+
 		versions = dict(dapper="6.06 LTS", feisty="7.04", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
 		distros = versions.keys()
 		distros.sort()
@@ -77,8 +88,8 @@ else:
 			html += "<tr>"
 			for d in distros:
 				color = "lightgrey"
-				path = "../www/manpages/%s/man%d/%s.html" % (d, i, t)
-				href_path = "/manpages/%s/man%d/%s.html" % (d, i, t)
+				path = "../www/manpages/%s/%s/man%d/%s.html" % (d, lr, i, t)
+				href_path = "/manpages/%s/%s/man%d/%s.html" % (d, lr, i, t)
 				if os.path.isfile(path):
 					color = "black"
 					html += '<td><a href="%s" style="text-decoration:none">%s(%d)</a></td>' % (href_path, t, i)
