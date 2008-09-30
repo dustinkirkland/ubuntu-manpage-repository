@@ -42,7 +42,18 @@ get = cgi.FieldStorage()
 
 if get.has_key("text"):
 	# Google Custom Search Engine results (full text search)
-	html += '<div id="cse-search-results"></div> <script type="text/javascript"> var googleSearchIframeName = "cse-search-results"; var googleSearchFormName = "cse-search-box"; var googleSearchFrameWidth = 600; var googleSearchDomain = "www.google.com"; var googleSearchPath = "/cse"; var googleSearchResizeIframe = false; </script> <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>'
+	html += '''
+<div id="cse-search-results"></div>
+<script type="text/javascript">
+  var googleSearchIframeName = "cse-search-results";
+  var googleSearchFormName = "cse-search-box";
+  var googleSearchFrameWidth = 600;
+  var googleSearchDomain = "www.google.com";
+  var googleSearchPath = "/cse";
+  var googleSearchResizeIframe = false;
+</script>
+<script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+'''
 else:
 	# Title only (file name match search)
 	descr = ["",							# 0
