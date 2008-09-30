@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Annotations start="0" num="44" total="44">
+  <Annotation about="manpages.ubuntu.com/*" score="1" timestamp="0x0004580eb4200090" href="ChVtYW5wYWdlcy51YnVudHUuY29tLyoQkIGAoeuBlgI">
+    <Label name="_cse_e2vwumte3fq"/>
+    <Label name="manuals"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com"/>
+  </Annotation>
+  <Annotation about="manpages.ubuntu.com/manpages/feisty/*" timestamp="0x0004580bd25ef576" href="CiVtYW5wYWdlcy51YnVudHUuY29tL21hbnBhZ2VzL2ZlaXN0eS8qEPbq-5K9gZYC">
+    <Label name="feisty_7.04"/>
+    <Label name="_cse_5zl6o8w6f0s"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com/manpages/feisty/*"/>
+  </Annotation>
+  <Annotation about="manpages.ubuntu.com/manpages/hardy/*" timestamp="0x0004580bce21fefa" href="CiRtYW5wYWdlcy51YnVudHUuY29tL21hbnBhZ2VzL2hhcmR5LyoQ-v2H8byBlgI">
+    <Label name="_cse_5zl6o8w6f0s"/>
+    <Label name="hardy_8.04"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com/manpages/hardy/*"/>
+  </Annotation>
+  <Annotation about="manpages.ubuntu.com/manpages/gutsy/*" timestamp="0x0004580bcdda3181" href="CiRtYW5wYWdlcy51YnVudHUuY29tL21hbnBhZ2VzL2d1dHN5LyoQgePo7ryBlgI">
+    <Label name="_cse_5zl6o8w6f0s"/>
+    <Label name="gutsy_7.10"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com/manpages/gutsy/*"/>
+  </Annotation>
+  <Annotation about="manpages.ubuntu.com/manpages/dapper/*" timestamp="0x0004580bcd880574" href="CiVtYW5wYWdlcy51YnVudHUuY29tL21hbnBhZ2VzL2RhcHBlci8qEPSKoOy8gZYC">
+    <Label name="_cse_5zl6o8w6f0s"/>
+    <Label name="dapper_6.06"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com/manpages/dapper/*"/>
+  </Annotation>
+  <Annotation about="manpages.ubuntu.com/manpages/intrepid/*" timestamp="0x0004580bc82a9e96" href="CidtYW5wYWdlcy51YnVudHUuY29tL21hbnBhZ2VzL2ludHJlcGlkLyoQlr2qwbyBlgI">
+    <Label name="_cse_5zl6o8w6f0s"/>
+    <Label name="intrepid_8.10"/>
+    <AdditionalData attribute="original_url" value="manpages.ubuntu.com/manpages/intrepid/*"/>
+  </Annotation>
+</Annotations>

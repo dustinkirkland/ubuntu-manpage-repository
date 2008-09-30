@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSearchEngine id="5zl6o8w6f0s" creator="003883529982892832976" keywords="Ubuntu manuals manpages" language="en">
+  <Title>Ubuntu Manpages</Title>
+  <Description>Comprehensive search of all Ubuntu manpages</Description>
+  <Context>
+    <Facet>
+      <FacetItem>
+        <Label name="intrepid_8.10" mode="FILTER">
+          <Rewrite/>
+        </Label>
+        <Title>Intrepid (8.10)</Title>
+      </FacetItem>
+      <FacetItem>
+        <Label name="dapper_6.06" mode="FILTER">
+          <Rewrite/>
+        </Label>
+        <Title>Dapper (6.06)</Title>
+      </FacetItem>
+    </Facet>
+    <Facet>
+      <FacetItem>
+        <Label name="hardy_8.04" mode="FILTER">
+          <Rewrite/>
+        </Label>
+        <Title>Hardy (8.04)</Title>
+      </FacetItem>
+    </Facet>
+    <Facet>
+      <FacetItem>
+        <Label name="gutsy_7.10" mode="FILTER">
+          <Rewrite/>
+        </Label>
+        <Title>Gutsy (7.10)</Title>
+      </FacetItem>
+    </Facet>
+    <Facet>
+      <FacetItem>
+        <Label name="feisty_7.04" mode="FILTER">
+          <Rewrite/>
+        </Label>
+        <Title>Feisty (7.04)</Title>
+      </FacetItem>
+    </Facet>
+    <BackgroundLabels>
+      <Label name="_cse_5zl6o8w6f0s" mode="FILTER"/>
+      <Label name="_cse_exclude_5zl6o8w6f0s" mode="ELIMINATE"/>
+    </BackgroundLabels>
+  </Context>
+  <LookAndFeel nonprofit="false">
+    <Colors url="#6d4c07" background="#FFFFFF" border="#CCCCCC" title="#6d4c07" text="#000000" visited="#6d4c07" light="#000000"/>
+  </LookAndFeel>
+  <AdSense/>
+  <EnterpriseAccount/>
+</CustomSearchEngine>
