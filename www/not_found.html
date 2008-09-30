@@ -1,5 +1,14 @@
+<script language="JavaScript">
+  // Try redirecting to a page of search results
+  var q = location.href;
+  q = q.replace(/.*\//, "");
+  q = q.replace(/\.html$/, "");
+  location.replace('/cgi-bin/search.py?cx=003883529982892832976%3A5zl6o8w6f0s&cof=FORID%3A9&ie=UTF-8&text=Text&lr=lang_en&q=' + q);
+</script>
+
 <!--#include virtual="/above1.html" -->
 Not Found
 <!--#include virtual="/above2.html" -->
 <br><big><big><strong>We could not find that page</strong></big></big><br><br>
+We will try to redirect you to some related material.
 <!--#include virtual="/below.html" -->
