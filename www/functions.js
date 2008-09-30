@@ -21,6 +21,41 @@
 // On Debian-based systems, the complete text of the GNU General Public
 // License can be found in /usr/share/common-licenses/GPL-3
 
+function langSelect() {
+	var regexS = "[\\?&]lr=([^&#]*)";
+	var regex = new RegExp( regexS );
+	var lang_val = regex.exec( window.location.href );
+	document.write("<select name=lr>");
+	lang = new Array();
+	val = new Array();
+	i = 0;
+	lang[i] = "en"; val[i++] = "en";
+	lang[i] = "cn"; val[i++] = "zh-CN";
+	lang[i] = "cs"; val[i++] = "cs";
+	lang[i] = "de"; val[i++] = "de";
+	lang[i] = "es"; val[i++] = "es";
+	lang[i] = "fr"; val[i++] = "fr";
+	lang[i] = "hu"; val[i++] = "hu";
+	lang[i] = "it"; val[i++] = "it";
+	lang[i] = "ja"; val[i++] = "ja";
+	lang[i] = "ko"; val[i++] = "ko";
+	lang[i] = "nl"; val[i++] = "nl";
+	lang[i] = "pl"; val[i++] = "pl";
+	lang[i] = "pt"; val[i++] = "pt";
+	lang[i] = "ru"; val[i++] = "ru";
+	lang[i] = "sv"; val[i++] = "sv";
+	lang[i] = "tr"; val[i++] = "tr";
+	lang[i] = "tw"; val[i++] = "zh-TW";
+	var selected = 0;
+	for (j=0; j<i; j++) {
+		if (lang_val != null && lang_val[1] == 'lang_' + val[j]) {
+			selected = j;
+		}
+		document.write("<option value='lang_" + val[j] + "'>" + lang[j] + "</option>");
+	}
+	document.write("</select>");
+	document.forms[0].lr.selectedIndex = selected;
+}
 
 function distroAndSection() {
 	var distro = location.href.split("/")[4];
