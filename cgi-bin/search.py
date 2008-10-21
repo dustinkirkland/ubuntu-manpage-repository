@@ -26,6 +26,7 @@
 ###############################################################################
 
 import cgi
+import glob
 import os
 import re
 
@@ -39,6 +40,11 @@ html += "Searching"
 html += open("../www/above2.html").read()
 
 get = cgi.FieldStorage()
+p1 = re.compile( '^\.\.\/www' );
+p2 = re.compile( '.*\/' );
+p3 = re.compile( '\.html$' );
+p4 = re.compile( '\.[0-9].*$' );
+p5 = re.compile( ', $' );
 
 if get.has_key("text"):
 	# Google Custom Search Engine results (full text search)
@@ -99,13 +105,19 @@ else:
 			html += "<tr>"
 			for d in distros:
 				color = "lightgrey"
-				path = "../www/manpages/%s/%s/man%d/%s.html" % (d, lr, i, t)
-				href_path = "/manpages/%s/%s/man%d/%s.html" % (d, lr, i, t)
-				if os.path.isfile(path):
+				path = "../www/manpages/%s/%s/man%d/%s.%d*.html" % (d, lr, i, t, i)
+				html += "<td align=center>"
+				dot = "."
+				for g in glob.glob(path):
+					dot = ""
 					color = "black"
-					html += '<td><a href="%s" style="text-decoration:none">%s(%d)</a></td>' % (href_path, t, i)
-				else:
-					html += "<td align=center>.</td>"
+					href_path = p1.sub('', g)
+					page = p2.sub('', g)
+					page = p3.sub('', page)
+					page = p4.sub('', page)
+					html += '<a href="%s" style="text-decoration:none">%s(%d)</a>, ' % (href_path, page, i)
+				html = p5.sub('', html)
+				html += dot + "</td>"
 			html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
 		html += "</table></td></tr></table><br>"
 
