@@ -54,14 +54,14 @@ for i in $man; do
 	i=`echo "$i" | sed "s/^.*\.\///"`
 	if echo "$i" | grep -qs "\->"; then
 		SYMLINK=1
-		symlink_src_html=`echo "$i" | sed "s/^.*\->//" | sed "s/\.[0-9][a-zA-Z]*\.gz$/\.html/"`
+		symlink_src_html=`echo "$i" | sed "s/^.*\->//" | sed "s/\.gz$/\.html/"`
 		i=`echo "$i" | sed "s/\->.*$//" `
 		#echo "INFO: [$i] is a symbolic link"
 	else
 		SYMLINK=0
 	fi
 	manpage="$TEMPDIR/$i"
-	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.[0-9][a-zA-Z]*\.gz$//"`
+	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.gz$//"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ] && [ "$SYMLINK" = "0" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
@@ -74,10 +74,16 @@ for i in $man; do
 		ln -f -s "$symlink_src_html" "$out"
 		echo "INFO: Created symlink [$out]"
 	else
-		#man "$manpage" 2>/dev/null | col -b > "$out".txt
-		#man2html -r "$manpage" > "$out"
-		w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" > "$out"
-		echo "INFO: Created manpage [$out]"
+		if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
+			LN=`echo "$LN" | sed "s/^\.so /\.\.\//" | sed "s/$/\.html/"`
+			ln -f -s "$LN" "$out"
+			echo "INFO: Created symlink [$out]"
+                else
+			#man "$manpage" 2>/dev/null | col -b > "$out".txt
+			#man2html -r "$manpage" > "$out"
+			w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" > "$out"
+			echo "INFO: Created manpage [$out]"
+		fi
 	fi
 	mv -f "$manpage" "$outgz"
 	touch "$DESTDIR/.cache/$NAME"
