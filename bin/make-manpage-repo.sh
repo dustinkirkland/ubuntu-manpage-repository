@@ -65,6 +65,7 @@ handle_deb() {
 
 link_en_locale() {
 	dist="$1"
+	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/en"
 	for i in `seq 1 9`; do
 		dir="$PUBLIC_HTML_DIR/manpages/$dist/en/man$i"
 		if [ -L "$dir" ]; then
