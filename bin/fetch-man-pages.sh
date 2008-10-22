@@ -74,15 +74,19 @@ for i in $man; do
 		ln -f -s "$symlink_src_html" "$out"
 		echo "INFO: Created symlink [$out]"
 	else
-		if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
-			LN=`echo "$LN" | sed "s/^\.so /\.\.\//" | sed "s/$/\.html/"`
-			ln -f -s "$LN" "$out"
-			echo "INFO: Created symlink [$out]"
-                else
-			#man "$manpage" 2>/dev/null | col -b > "$out".txt
-			#man2html -r "$manpage" > "$out"
-			w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" > "$out"
-			echo "INFO: Created manpage [$out]"
+		#man "$manpage" 2>/dev/null | col -b > "$out".txt
+		#man2html -r "$manpage" > "$out"
+		w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" > "$out"
+		echo "INFO: Created manpage [$out]"
+		wc=`cat "$out" | wc -l`
+		if [ "$wc" = "0" ]; then
+			# If the size of the output file is too small, we might have a manpage
+			# with a built-in link of the form ".so man3/foo"
+			if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
+				LN=`echo "$LN" | sed "s/^\.so /\.\.\//" | sed "s/$/\.html/"`
+				ln -f -s "$LN" "$out"
+				echo "INFO: Created symlink [$out]"
+			fi
 		fi
 	fi
 	mv -f "$manpage" "$outgz"
