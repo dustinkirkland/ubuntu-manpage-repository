@@ -1,9 +1,16 @@
 <script language="JavaScript">
-  // Try redirecting to a page of search results
   var q = location.href;
-  q = q.replace(/.*\//, "");
-  q = q.replace(/\.html$/, "");
-  location.replace('/cgi-bin/search.py?cx=003883529982892832976%3A5zl6o8w6f0s&cof=FORID%3A9&ie=UTF-8&text=Text&lr=lang_en&q=' + q);
+  if (q.search(/\/manpages\/.*\/man[0-9]\/.*[^0-9]\.html$/) >= 0) {
+    // Current location matches a legacy link, with just a plain .html filename
+    // Try to redirect to the new location, which has a .[0-9].html filename
+    location.replace(q.replace(/\/man([0-9])\/(.*)\.html/, "/man$1/$2.$1.html"));
+  } else {
+    // Try redirecting to a page of search results
+    q = q.replace(/.*\//, "");
+    q = q.replace(/\.html$/, "");
+    q = q.replace(/\.[0-9].*$/, "");
+    location.replace('/cgi-bin/search.py?cx=003883529982892832976%3A5zl6o8w6f0s&cof=FORID%3A9&ie=UTF-8&text=Text&lr=lang_en&q=' + q);
+  }
 </script>
 
 <!--#include virtual="/above1.html" -->
