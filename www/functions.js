@@ -72,6 +72,11 @@ function distroAndSection() {
 			document.write("(<a href=\"../man" + section + "\">" + section + "</a>)");
 		}
 	}
+	var gz_href = location.href.replace(/\/manpages\//, "\/manpages.gz\/");
+	gz_href = gz_href.replace(/\/en\//, "\/");
+	gz_href = gz_href.replace(/\.html$/, "\.gz");
+	var gz = gz_href.replace(/^.*\//, "");
+	document.write(" - <a href=\"" + gz_href + "\">" + gz + "</a>");
 }
 
 function highlight(word) {
@@ -85,7 +90,6 @@ function navbar() {
         document.write("<ul>");
         versions = new Array();
         versions.push({"name":"dapper", "number":"6.06 LTS"});
-        versions.push({"name":"feisty", "number":"7.04"});
         versions.push({"name":"gutsy", "number":"7.10"});
         versions.push({"name":"hardy", "number":"8.04 LTS"});
         versions.push({"name":"intrepid", "number":"8.10"});
