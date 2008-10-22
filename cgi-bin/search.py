@@ -134,7 +134,7 @@ else:
 				html += title_html
 		else:
 			# But if we do not find any matching titles, do a full text search
-			html += google_cse_html
+			html += "<strong>No matching titles found - Full text search results below</strong>" + google_cse_html
 
 
 html += open("../www/below.html").read()
