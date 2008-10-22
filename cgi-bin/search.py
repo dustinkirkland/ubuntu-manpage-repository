@@ -46,9 +46,8 @@ p3 = re.compile( '\.html$' );
 p4 = re.compile( '\.[0-9].*$' );
 p5 = re.compile( ', $' );
 
-if get.has_key("text"):
-	# Google Custom Search Engine results (full text search)
-	html += '''
+# Google Custom Search Engine results (full text search)
+google_cse_html = '''
 <div id="cse-search-results"></div>
 <script type="text/javascript">
   var googleSearchIframeName = "cse-search-results";
@@ -60,6 +59,9 @@ if get.has_key("text"):
 </script>
 <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
 '''
+
+if get.has_key("text"):
+	html += google_cse_html
 else:
 	# Title only (file name match search)
 	descr = ["",							# 0
@@ -79,7 +81,7 @@ else:
 	elif get.has_key("q"):
 		t = get["q"].value
 	if t != "":
-		html += "<script>document.forms[0].q.value='" + t + "';</script>"
+		title_html = "<script>document.forms[0].q.value='" + t + "';</script>"
 		p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 		t = p.sub('', t)
 
@@ -97,29 +99,42 @@ else:
 		versions = dict(dapper="6.06 LTS", gutsy="7.10", hardy="8.04 LTS", intrepid="8.10")
 		distros = versions.keys()
 		distros.sort()
-		html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
+		title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
 		for d in distros:
-			html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
-		html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
+			title_html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
+		title_html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
+		matches = 0
 		for i in range(1,10):
-			html += "<tr>"
+			title_html += "<tr>"
 			for d in distros:
 				color = "lightgrey"
 				path = "../www/manpages/%s/%s/man%d/%s.%d*.html" % (d, lr, i, t, i)
-				html += "<td align=center>"
+				title_html += "<td align=center>"
 				dot = "."
 				for g in glob.glob(path):
+					matches += 1
 					dot = ""
 					color = "black"
 					href_path = p1.sub('', g)
 					page = p2.sub('', g)
 					page = p3.sub('', page)
 					page = p4.sub('', page)
-					html += '<a href="%s" style="text-decoration:none">%s(%d)</a>, ' % (href_path, page, i)
-				html = p5.sub('', html)
-				html += dot + "</td>"
-			html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
-		html += "</table></td></tr></table><br>"
+					title_html += '<a href="%s" style="text-decoration:none">%s(%d)</a>, ' % (href_path, page, i)
+				title_html = p5.sub('', title_html)
+				title_html += dot + "</td>"
+			title_html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
+		title_html += "</table></td></tr></table><br>"
+		if (matches > 0):
+			if get["titles"].value == "404":
+				# If we were sent here by a 404-not-found, and we have at least one match,
+				# redirect the user to the last page in our list
+				html += "<script>location.replace('" + href_path + "');</script>"
+			else:
+				# Otherwise, a normal title search, display the title table
+				html += title_html
+		else:
+			# But if we do not find any matching titles, do a full text search
+			html += google_cse_html
 
 
 html += open("../www/below.html").read()
