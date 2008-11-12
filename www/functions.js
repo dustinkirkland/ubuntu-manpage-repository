@@ -93,6 +93,7 @@ function navbar() {
         versions.push({"name":"gutsy", "number":"7.10"});
         versions.push({"name":"hardy", "number":"8.04 LTS"});
         versions.push({"name":"intrepid", "number":"8.10"});
+        versions.push({"name":"jaunty", "number":"9.04"});
         for (var i=0; i<versions.length; i++) {
 	        if (location.href.match("\.html$")) {
 			href = location.href;
