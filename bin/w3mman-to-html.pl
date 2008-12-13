@@ -58,7 +58,7 @@ my $pkg = $ARGV[0];
 my $src_pkg = $ARGV[1] . "/" . $pkg;
 $src_pkg =~ s/_.*$//g;
 
-unshift(@stdin, '<!--#include virtual="/above2.html" -->Provided by: <a href="http://packages.ubuntu.com/' . $src_pkg . '">' . $pkg . '</a><pre>');
+unshift(@stdin, '<!--#include virtual="/above2.html" -->Provided by: <a href="http://launchpad.net/ubuntu/+source/' . $src_pkg . '">' . $pkg . '</a><pre>');
 unshift(@stdin, $title);
 unshift(@stdin, '<!--#include virtual="/above1.html" -->');
 push(@stdin, '</pre><!--#include virtual="/below.html" -->');
