@@ -81,9 +81,9 @@ else:
 	elif get.has_key("q"):
 		t = get["q"].value
 	if t != "":
-		title_html = "<script>document.forms[0].q.value='" + t + "';</script>"
 		p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 		t = p.sub('', t)
+		title_html = "<script>document.forms[0].q.value='" + t + "';</script>"
 
 		if get.has_key("lr"):
 			lr = get["lr"].value
