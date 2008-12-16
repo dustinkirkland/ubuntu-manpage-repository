@@ -125,7 +125,7 @@ else:
 			title_html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
 		title_html += "</table></td></tr></table><br>"
 		if (matches > 0):
-			if get["titles"].value == "404":
+			if get.has_key("titles") and get["titles"].value == "404":
 				# If we were sent here by a 404-not-found, and we have at least one match,
 				# redirect the user to the last page in our list
 				html += "<script>location.replace('" + href_path + "');</script>"
