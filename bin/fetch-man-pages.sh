@@ -75,7 +75,7 @@ for i in $man; do
 		echo "INFO: Created symlink [$out]"
 	else
 		if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
-			LN=`echo "$LN" | sed "s/^\.so /\.\.\//" | sed "s/$/\.html/"`
+			LN=`echo "$LN" | sed 's/^\.so /\.\.\//' | sed 's/\/\.\.\//\//g' | sed 's/$/\.html/'`
 			ln -f -s "$LN" "$out"
 			echo "INFO: Created symlink [$out]"
                 else
