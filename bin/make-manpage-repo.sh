@@ -28,6 +28,7 @@
 . ./config
 
 # Establish some locking, to keep multiple updates from running
+mkdir -p "$PUBLIC_HTML_DIR/manpages"
 LOCK="$PUBLIC_HTML_DIR/manpages/UPDATE_IN_PROGRESS"
 if [ -e "$LOCK" ]; then
 	echo "ERROR: Update is currently running"
