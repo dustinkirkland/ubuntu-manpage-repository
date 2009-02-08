@@ -42,7 +42,7 @@ date > $LOCK
 FORCE="$1"
 
 pkg_updated() {
-	if [ "$FORCE" = "-f" ]; then
+	if [ "$FORCE" = "-f" -o "$FORCE" = "--force" ]; then
 		return 0
 	fi
 	deb="$1"
