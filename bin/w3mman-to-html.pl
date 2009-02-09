@@ -55,10 +55,11 @@ for (my $i=0; $i<@stdin; $i++) {
 }
 
 my $pkg = $ARGV[0];
-my $src_pkg = $pkg;
-$src_pkg =~ s/_.*$//g;
-my $pkg_link = "https://launchpad.net/ubuntu/" . $ARGV[1] . "/+package/" . $src_pkg;
-my $bug_link = "https://bugs.launchpad.net/ubuntu/+source/" . $src_pkg . "/+filebug";
+my $src_pkg = $ARGV[2];
+my $bin_pkg = $pkg;
+$bin_pkg =~ s/_.*$//g;
+my $pkg_link = "https://launchpad.net/ubuntu/" . $ARGV[1] . "/+package/" . $bin_pkg;
+my $bug_link = "https://bugs.launchpad.net/ubuntu/+source/" . $src_pkg . "/+filebug-advanced";
 
 unshift(@stdin, '<!--#include virtual="/above2.html" -->Provided by: <a href="' . $pkg_link . '">' . $pkg . '</a> <a href="' . $bug_link . '" title="Report a bug in the content of this documentation"><img src="/img/bug.png" alt="bug" border=0></a><pre>');
 unshift(@stdin, $title);

@@ -45,6 +45,7 @@ if [ -z "$man" ]; then
 	# Exit immediately if this package does not contain manpages
 	exit 0
 fi
+src_pkg=`dpkg -I "$DEB" | grep "^ Source: " | sed "s/^.*: //"`
 
 #echo "INFO: Extracting manpages from [$DEB]"
 TEMPDIR=`mktemp -d -t doc-XXXXXX`
@@ -81,7 +82,7 @@ for i in $man; do
                 else
 			#man "$manpage" 2>/dev/null | col -b > "$out".txt
 			#man2html -r "$manpage" > "$out"
-			w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" > "$out"
+			w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" "$src_pkg" > "$out"
 			echo "INFO: Created manpage [$out]"
 		fi
 	fi
