@@ -45,7 +45,7 @@ if [ -z "$man" ]; then
 	# Exit immediately if this package does not contain manpages
 	exit 0
 fi
-src_pkg=`dpkg -I "$DEB" | grep "^ Source: " | sed "s/^.*: //"`
+src_pkg=`dpkg -I "$DEB" | egrep "^ Package: |^ Source: " | tail -n1 | sed "s/^.*: //"`
 
 #echo "INFO: Extracting manpages from [$DEB]"
 TEMPDIR=`mktemp -d -t doc-XXXXXX`
