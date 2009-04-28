@@ -7,6 +7,6 @@ MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
 
 SITE="http://ubuntu.example.com"
 
-DISTROS="jaunty intrepid hardy gutsy dapper"
+DISTROS="karmic jaunty intrepid hardy dapper"
 REPOS="main restricted universe multiverse"
 ARCH="i386"
