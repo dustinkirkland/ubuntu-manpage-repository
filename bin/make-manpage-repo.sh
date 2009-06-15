@@ -68,20 +68,22 @@ link_en_locale() {
 	dist="$1"
 	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/en"
 	for i in `seq 1 9`; do
-		dir="$PUBLIC_HTML_DIR/manpages/$dist/en/man$i"
-		if [ -L "$dir" ]; then
-			# link exists: we're good
-			continue
-		elif [ -d "$dir" ]; then
-			# dir exists: mv, ln, restore
-			mv -f "$dir" "$dir.bak"
-			ln -s "../man$i" "$dir"
-			mv -f "$dir.bak"/* "$dir"
-			rmdir "$dir.bak"
-		else
-			# link does not exist: establish the link
-			ln -s "../man$i" "$dir"
-		fi
+		for j in "manpages" "manpages.gz"; do
+			dir="$PUBLIC_HTML_DIR/$j/$dist/en/man$i"
+			if [ -L "$dir" ]; then
+				# link exists: we're good
+				continue
+			elif [ -d "$dir" ]; then
+				# dir exists: mv, ln, restore
+				mv -f "$dir" "$dir.bak"
+				ln -s "../man$i" "$dir"
+				mv -f "$dir.bak"/* "$dir"
+				rmdir "$dir.bak"
+			else
+				# link does not exist: establish the link
+				ln -s "../man$i" "$dir"
+			fi
+		done
 	done
 	return 0
 }
