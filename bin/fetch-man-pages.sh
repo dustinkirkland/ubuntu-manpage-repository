@@ -35,6 +35,7 @@ DESTDIRGZ="$PUBLIC_HTML_DIR/manpages.gz/$DIST"
 DEB="$DEBDIR/$PKG"
 NAME=`basename "$PKG" | awk -F_ '{print $1}'`
 NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
+W3MMAN_MAN='man --no-hyphenation'
 
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
