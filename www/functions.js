@@ -94,6 +94,7 @@ function navbar() {
         versions.push({"name":"intrepid", "number":"8.10"});
         versions.push({"name":"jaunty", "number":"9.04"});
         versions.push({"name":"karmic", "number":"9.10"});
+        versions.push({"name":"lucid", "number":"10.04 LTS"});
         for (var i=0; i<versions.length; i++) {
 	        if (location.href.match("\.html$")) {
 			href = location.href;
