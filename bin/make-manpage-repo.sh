@@ -69,6 +69,7 @@ link_en_locale() {
 	mkdir -p "$PUBLIC_HTML_DIR/manpages/$dist/en"
 	for i in `seq 1 9`; do
 		for j in "manpages" "manpages.gz"; do
+			mkdir -p "$PUBLIC_HTML_DIR/$j/$dist/en"
 			dir="$PUBLIC_HTML_DIR/$j/$dist/en/man$i"
 			if [ -L "$dir" ]; then
 				# link exists: we're good
