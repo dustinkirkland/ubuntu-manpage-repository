@@ -39,7 +39,8 @@ export W3MMAN_MAN='man --no-hyphenation'
 export MAN_KEEP_FORMATTING=1
 
 #echo "INFO: Looking for manpages in [$DEB]"
-man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
+# The .*man bit is to handle postgres' inane manpage installation
+man=`dpkg-deb -c "$DEB" | egrep " \./usr/share.*/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
 if [ -z "$man" ]; then
 	#echo "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
@@ -64,7 +65,7 @@ for i in $man; do
 		SYMLINK=0
 	fi
 	manpage="$TEMPDIR/$i"
-	i=`echo "$i" | sed "s/usr\/share\/man\///i" | sed "s/\.gz$//"`
+	i=`echo "$i" | sed "s/usr\/share.*\/man\///i" | sed "s/\.gz$//"`
 	#echo "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ] && [ "$SYMLINK" = "0" ]; then
 		#echo "INFO: Skipping empty manpage [$manpage]"
