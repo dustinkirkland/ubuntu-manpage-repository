@@ -35,7 +35,8 @@ DESTDIRGZ="$PUBLIC_HTML_DIR/manpages.gz/$DIST"
 DEB="$DEBDIR/$PKG"
 NAME=`basename "$PKG" | awk -F_ '{print $1}'`
 NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
-W3MMAN_MAN='man --no-hyphenation'
+export W3MMAN_MAN='man --no-hyphenation'
+export MAN_KEEP_FORMATTING=1
 
 #echo "INFO: Looking for manpages in [$DEB]"
 man=`dpkg-deb -c "$DEB" | egrep " \./usr/share/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
@@ -84,8 +85,6 @@ for i in $man; do
 			#man "$manpage" 2>/dev/null | col -b > "$out".txt
 			#man2html -r "$manpage" > "$out"
 			#w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" "$src_pkg" > "$out"
-			export W3MMAN_MAN='man --no-hyphenation'
-			export MAN_KEEP_FORMATTING=1
 			BODY=`/usr/lib/w3m/cgi-bin/w3mman2html.cgi "local=$manpage" | grep -A 1000000 "^<b>" | sed '/<\/body>/,+100 d' | sed -e 's:^<b>\(.*\)</b>$:</pre><h4><b>\1</b></h4><pre>:g' | sed -e 's:<a href="file[^?]*?\([^(]*\)(\([^)]*\))">:<a href="../man\2/\1.\2.html">:g'`
 			TITLE=`echo "$BODY" | head -n2 | tail -n1`
 			BIN_PKG=`echo "$NAME_AND_VER" | sed s/_.*$//g`
