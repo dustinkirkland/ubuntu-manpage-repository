@@ -52,6 +52,8 @@ src_pkg=`dpkg -I "$DEB" | egrep "^ Package: |^ Source: " | tail -n1 | sed "s/^.*
 
 #echo "INFO: Extracting manpages from [$DEB]"
 TEMPDIR=`mktemp -d -t doc-XXXXXX`
+trap "rm -rf $TEMPDIR 2>/dev/null || true" EXIT HUP INT QUIT TERM
+
 dpkg-deb -x "$DEB" "$TEMPDIR"
 for i in $man; do
 	#echo "INFO: Considering entry [$i]"
