@@ -123,6 +123,19 @@ function installSearchEngine() {
 	}
 }
 
+function getWidth() {
+	width = 0;
+	if (parseInt(navigator.appVersion)>3) {
+		if (navigator.appName=="Netscape") {
+			width = window.innerWidth;
+		} else if (navigator.appName.indexOf("Microsoft")!=-1) {
+			width = document.body.offsetWidth;
+		}
+	}
+	return width;
+}
+
+
 //////////////////////////////////
 // Google Analytics Code
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -138,7 +151,7 @@ try {
 // This script was written By Brady Mulhollem - WebTech101.com
 // http://www.webtech101.com/Javascript/toc-generator
 
-window.onload = function(){new tocGen('top','toc')};
+window.onload = function(){if (getWidth() > 790) { new tocGen('top','toc')}};
 
 function tocGen(id,writeTo){
 	this.id = id;
