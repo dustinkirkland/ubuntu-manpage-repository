@@ -31,8 +31,8 @@
 mkdir -p "$PUBLIC_HTML_DIR/manpages"
 LOCK="$PUBLIC_HTML_DIR/manpages/UPDATE_IN_PROGRESS"
 if [ -e "$LOCK" ]; then
-	echo "ERROR: Update is currently running"
-	echo "Lock: $LOCK"
+	printf "%s\n" "ERROR: Update is currently running"
+	printf "%s\n" "Lock: $LOCK"
 	cat "$LOCK"
 	exit 1
 fi
@@ -46,12 +46,12 @@ pkg_updated() {
 		return 0
 	fi
 	deb="$1"
-	#echo "INFO: Looking at package [$deb]"
+	#printf "%s\n" "INFO: Looking at package [$deb]"
 	name=`basename "$deb" | awk -F_ '{print $1}'`
-	cache_modtime=`stat -c %Y "$PUBLIC_HTML_DIR/manpages/$dist/.cache/$name" 2>/dev/null || echo "0"`
+	cache_modtime=`stat -c %Y "$PUBLIC_HTML_DIR/manpages/$dist/.cache/$name" 2>/dev/null || printf "0"`
 	deb_modtime=`stat -c %Y "$DEBDIR/$deb"`
 	if [ "$cache_modtime" -ge "$deb_modtime" ]; then
-	        #echo "INFO: Skipping non-updated package [$DEBDIR/$deb]"
+	        #printf "%s\n" "INFO: Skipping non-updated package [$DEBDIR/$deb]"
 		return 1
 	else
 		return 0

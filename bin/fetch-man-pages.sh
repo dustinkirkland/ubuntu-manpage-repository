@@ -38,11 +38,11 @@ NAME_AND_VER=`basename "$PKG" | sed "s/\.deb$//"`
 export W3MMAN_MAN='man --no-hyphenation'
 export MAN_KEEP_FORMATTING=1
 
-#echo "INFO: Looking for manpages in [$DEB]"
+#printf "%s\n" "INFO: Looking for manpages in [$DEB]"
 # The .*man bit is to handle postgres' inane manpage installation
 man=`dpkg-deb -c "$DEB" | egrep " \./usr/share.*/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
 if [ -z "$man" ]; then
-	#echo "INFO: No manpages: [$DIST] [$PKG]"
+	#printf "%s\n" "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
 	touch $DESTDIR/.cache/$NAME
 	# Exit immediately if this package does not contain manpages
@@ -50,27 +50,27 @@ if [ -z "$man" ]; then
 fi
 src_pkg=`dpkg -I "$DEB" | egrep "^ Package: |^ Source: " | tail -n1 | sed "s/^.*: //"`
 
-#echo "INFO: Extracting manpages from [$DEB]"
+#printf "%s\n" "INFO: Extracting manpages from [$DEB]"
 TEMPDIR=`mktemp -d -t doc-XXXXXX`
 trap "rm -rf $TEMPDIR 2>/dev/null || true" EXIT HUP INT QUIT TERM
 
 dpkg-deb -x "$DEB" "$TEMPDIR"
 for i in $man; do
-	#echo "INFO: Considering entry [$i]"
-	i=`echo "$i" | sed "s/^.*\.\///"`
-	if echo "$i" | grep -qs "\->"; then
+	#printf "%s\n" "INFO: Considering entry [$i]"
+	i=`printf "%s" "$i" | sed "s/^.*\.\///"`
+	if printf "%s" "$i" | grep -qs "\->"; then
 		SYMLINK=1
-		symlink_src_html=`echo "$i" | sed "s/^.*\->//" | sed "s/\.gz$/\.html/"`
-		i=`echo "$i" | sed "s/\->.*$//" `
-		#echo "INFO: [$i] is a symbolic link"
+		symlink_src_html=`printf "%s" "$i" | sed "s/^.*\->//" | sed "s/\.gz$/\.html/"`
+		i=`printf "%s" "$i" | sed "s/\->.*$//" `
+		#printf "%s\n" "INFO: [$i] is a symbolic link"
 	else
 		SYMLINK=0
 	fi
 	manpage="$TEMPDIR/$i"
-	i=`echo "$i" | sed "s/usr\/share.*\/man\///i" | sed "s/\.gz$//"`
-	#echo "INFO: Considering manpage [$i]"
+	i=`printf "%s" "$i" | sed "s/usr\/share.*\/man\///i" | sed "s/\.gz$//"`
+	#printf "%s\n" "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ] && [ "$SYMLINK" = "0" ]; then
-		#echo "INFO: Skipping empty manpage [$manpage]"
+		#printf "%s\n" "INFO: Skipping empty manpage [$manpage]"
 		continue
 	fi
 	out="$DESTDIR"/"$i".html
@@ -78,27 +78,29 @@ for i in $man; do
 	mkdir -p `dirname "$out"` "$outgz" > /dev/null || true
 	if [ "$SYMLINK" = "1" ]; then
 		ln -f -s "$symlink_src_html" "$out"
-		echo "INFO: Created symlink [$out]"
+		printf "%s\n" "INFO: Created symlink [$out]"
 	else
 		if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
-			LN=`echo "$LN" | sed 's/^\.so /\.\.\//' | sed 's/\/\.\.\//\//g' | sed 's/$/\.html/'`
+			LN=`printf "%s" "$LN" | sed 's/^\.so /\.\.\//' | sed 's/\/\.\.\//\//g' | sed 's/$/\.html/'`
 			ln -f -s "$LN" "$out"
-			echo "INFO: Created symlink [$out]"
+			printf "INFO: Created symlink [$out]"
                 else
 			#man "$manpage" 2>/dev/null | col -b > "$out".txt
 			#man2html -r "$manpage" > "$out"
 			#w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" "$src_pkg" > "$out"
 			BODY=`/usr/lib/w3m/cgi-bin/w3mman2html.cgi "local=$manpage" | grep -A 1000000 "^<b>" | sed '/<\/body>/,+100 d' | sed -e 's:^<b>\(.*\)</b>$:</pre><h4><b>\1</b></h4><pre>:g' | sed -e 's:<a href="file[^?]*?\([^(]*\)(\([^)]*\))">:<a href="../man\2/\1.\2.html">:g'`
-			TITLE=`echo "$BODY" | head -n2 | tail -n1`
-			BIN_PKG=`echo "$NAME_AND_VER" | sed s/_.*$//g`
+			TITLE=`printf "%s" "$BODY" | head -n2 | tail -n1`
+			BIN_PKG=`printf "%s" "$NAME_AND_VER" | sed s/_.*$//g`
 			PKG_LINK="https://launchpad.net/ubuntu/$DIST/+package/$BIN_PKG"
 			BUG_LINK="https://bugs.launchpad.net/ubuntu/+source/$src_pkg/+filebug-advanced"
-			echo '<!--#include virtual="/above1.html" -->' "$TITLE" > "$out"
-			echo '<!--#include virtual="/above2.html" -->Provided by: <a href="' $PKG_LINK '">' $NAME_AND_VER '</a> <a href="' $BUG_LINK '" title="Report a bug in the content of this documentation"><img src="/img/bug.png" alt="bug" border=0></a><br><br><pre>' >> "$out"
-			echo "$BODY" >> "$out"
-			echo '</pre><!--#include virtual="/below.html" -->' >> "$out"
+			printf "%s\n" "<!--#include virtual='/above1.html' -->" > "$out"
+			printf "%s\n" "$TITLE" >> "$out"
+			printf "%s\n" "<!--#include virtual='/above2.html' -->" >> "$out"
+			printf "%s\n" "Provided by: <a href='$PKG_LINK'>$NAME_AND_VER</a> <a href='$BUG_LINK' title='Report a bug in the content of this documentation'><img src='/img/bug.png' alt='bug' border=0></a><br><br><pre>" >> "$out"
+			printf "%s\n" "$BODY" >> "$out"
+			printf "%s\n" "</pre><!--#include virtual='/below.html' -->" >> "$out"
 
-			echo "INFO: Created manpage [$out]"
+			printf "%s\n" "INFO: Created manpage [$out]"
 		fi
 	fi
 	mv -f "$manpage" "$outgz"
