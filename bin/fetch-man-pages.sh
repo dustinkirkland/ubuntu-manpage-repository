@@ -89,7 +89,7 @@ for i in $man; do
 			#man2html -r "$manpage" > "$out"
 			#w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" "$src_pkg" > "$out"
 			BODY=`/usr/lib/w3m/cgi-bin/w3mman2html.cgi "local=$manpage" | grep -A 1000000 "^<b>" | sed '/<\/body>/,+100 d' | sed -e 's:^<b>\(.*\)</b>$:</pre><h4><b>\1</b></h4><pre>:g' | sed -e 's:<a href="file[^?]*?\([^(]*\)(\([^)]*\))">:<a href="../man\2/\1.\2.html">:g'`
-			TITLE=`printf "%s" "$BODY" | head -n2 | tail -n1`
+			TITLE=`printf "%s" "$BODY" | head -n2 | tail -n1 | sed "s/<[^>]\+>//g"`
 			BIN_PKG=`printf "%s" "$NAME_AND_VER" | sed s/_.*$//g`
 			PKG_LINK="https://launchpad.net/ubuntu/$DIST/+package/$BIN_PKG"
 			BUG_LINK="https://bugs.launchpad.net/ubuntu/+source/$src_pkg/+filebug-advanced"
