@@ -91,11 +91,11 @@ div.qandaset dt :visited {
 }
 
 :link { 
-	color: #6d4c07; /* dark brown */
+	color: #8a3e49; /* light purple */
 }
 
 :visited { 
-	color: #6d4c07; /* dark brown */
+	color: #8a3e49; /* light purple */
 }
 
 dl { 
@@ -113,7 +113,7 @@ div.qandaset {
 
 .guimenu, .guimenuitem, .guisubmenu {
 	font-style: italic;
-	color: #6d4c07; /* dark brown */
+	color: #8a3e49; /* light purple */
 }
 
 .guilabel, .guibutton { 
@@ -136,7 +136,7 @@ pre
 
 hr
 {
-	color: #6d4c07;
+	color: #8a3e49;
 }
 
 h1
@@ -144,7 +144,7 @@ h1
         margin: 0 0 0 0;
         font-weight: bold;
 	font-size: 2em; 
-        color: #6d4c07; /* ubuntu dark brown */
+        color: #8a3e49; /* light purple */
         line-height: 1.2em;
 
 }	
@@ -154,14 +154,14 @@ h2, h3, h4, h5, h6
 {
         margin: 0 0 0 0;
         font-weight: normal; 
-        color: #6d4c07; /* ubuntu dark brown */
+        color: #8a3e49; /* light purple */
         line-height: 1.2em;
 }	
 
 h2
 {
         font-size: 1.8em;
-	border-bottom: 2px solid #6d4c07;
+	border-bottom: 2px solid #8a3e49;
 }
 
 h3 {
