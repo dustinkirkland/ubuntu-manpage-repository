@@ -101,8 +101,8 @@ else:
 		distros.sort()
 		title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
 		for d in distros:
-			title_html += "<th bgcolor=#EAD9B4>%s<br><small>%s</small></th>" % (d, versions[d])
-		title_html += "<th bgcolor=#EAD9B4>Section Description</th></tr>"
+			title_html += "<th bgcolor=#f0bcc1>%s<br><small>%s</small></th>" % (d, versions[d])
+		title_html += "<th bgcolor=#f0bcc1>Section Description</th></tr>"
 		matches = 0
 		for i in range(1,10):
 			title_html += "<tr>"
