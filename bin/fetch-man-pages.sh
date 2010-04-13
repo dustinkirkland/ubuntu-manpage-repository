@@ -40,7 +40,7 @@ export MAN_KEEP_FORMATTING=1
 
 #printf "%s\n" "INFO: Looking for manpages in [$DEB]"
 # The .*man bit is to handle postgres' inane manpage installation
-man=`dpkg-deb -c "$DEB" | egrep " \./usr/share.*/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed "s/^.*\.\//\.\//" | sed "s/ \-> /\->/"`
+man=`dpkg-deb -c "$DEB" | egrep " \./usr/share.*/man/.*\.[0-9][a-zA-Z0-9\.\-]*\.gz$" | sed -e "s/^.*\.\//\.\//" -e "s/ \-> /\->/"`
 if [ -z "$man" ]; then
 	#printf "%s\n" "INFO: No manpages: [$DIST] [$PKG]"
 	# Touch the cache file so we don't look again until package updated
@@ -60,14 +60,14 @@ for i in $man; do
 	i=`printf "%s" "$i" | sed "s/^.*\.\///"`
 	if printf "%s" "$i" | grep -qs "\->"; then
 		SYMLINK=1
-		symlink_src_html=`printf "%s" "$i" | sed "s/^.*\->//" | sed "s/\.gz$/\.html/"`
+		symlink_src_html=`printf "%s" "$i" | sed -e "s/^.*\->//" -e "s/\.gz$/\.html/"`
 		i=`printf "%s" "$i" | sed "s/\->.*$//" `
 		#printf "%s\n" "INFO: [$i] is a symbolic link"
 	else
 		SYMLINK=0
 	fi
 	manpage="$TEMPDIR/$i"
-	i=`printf "%s" "$i" | sed "s/usr\/share.*\/man\///i" | sed "s/\.gz$//"`
+	i=`printf "%s" "$i" | sed -e "s/usr\/share.*\/man\///i" -e "s/\.gz$//"`
 	#printf "%s\n" "INFO: Considering manpage [$i]"
 	if [ ! -s "$manpage" -o -z "$i" ] && [ "$SYMLINK" = "0" ]; then
 		#printf "%s\n" "INFO: Skipping empty manpage [$manpage]"
@@ -81,14 +81,14 @@ for i in $man; do
 		printf "%s\n" "INFO: Created symlink [$out]"
 	else
 		if LN=`zcat "$manpage" | head -n1 | grep "^\.so "`; then
-			LN=`printf "%s" "$LN" | sed 's/^\.so /\.\.\//' | sed 's/\/\.\.\//\//g' | sed 's/$/\.html/'`
+			LN=`printf "%s" "$LN" | sed -e 's/^\.so /\.\.\//' -e 's/\/\.\.\//\//g' -e 's/$/\.html/'`
 			ln -f -s "$LN" "$out"
 			printf "INFO: Created symlink [$out]"
                 else
 			#man "$manpage" 2>/dev/null | col -b > "$out".txt
 			#man2html -r "$manpage" > "$out"
 			#w3mman -l "$manpage" | ./w3mman-to-html.pl "$NAME_AND_VER" "$DIST" "$src_pkg" > "$out"
-			BODY=`/usr/lib/w3m/cgi-bin/w3mman2html.cgi "local=$manpage" | grep -A 1000000 "^<b>" | sed '/<\/body>/,+100 d' | sed -e 's:^<b>\(.*\)</b>$:</pre><h4><b>\1</b></h4><pre>:g' | sed -e 's:<a href="file[^?]*?\([^(]*\)(\([^)]*\))">:<a href="../man\2/\1.\2.html">:g'`
+			BODY=`/usr/lib/w3m/cgi-bin/w3mman2html.cgi "local=$manpage" | grep -A 1000000 "^<b>" | sed -e '/<\/body>/,+100 d' -e 's:^<b>\(.*\)</b>$:</pre><h4><b>\1</b></h4><pre>:g' -e 's:<a href="file\:///[^?]*?\([^(]*\)(\([^)]*\))">:<a href="../man\2/\1.\2.html">:g'`
 			TITLE=`printf "%s" "$BODY" | head -n2 | tail -n1 | sed "s/<[^>]\+>//g"`
 			BIN_PKG=`printf "%s" "$NAME_AND_VER" | sed s/_.*$//g`
 			PKG_LINK="https://launchpad.net/ubuntu/$DIST/+package/$BIN_PKG"
