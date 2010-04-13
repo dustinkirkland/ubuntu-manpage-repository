@@ -104,6 +104,7 @@ function navbar() {
 	                document.write("<li id=\"" + highlight(versions[i]["name"]) + "\"><a href=\"/manpages/" + versions[i]["name"] + "\">" + versions[i]["number"] + "</a></li>");
 		}
         }
+	document.write('<li><a href="javascript:printManpage()"><img src="/img/printer.png" border=0 align=top vspace=3></a></li>');
         document.write("</ul>");
 }
 
@@ -134,6 +135,19 @@ function getWidth() {
 	}
 	return width;
 }
+
+function printManpage() { 
+	var disp_setting="toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=yes,width=600,height=400"; 
+	var content = document.getElementById("top").innerHTML; 
+	var docprint = window.open("","",disp_setting); 
+	docprint.document.open(); 
+	docprint.document.write('<html><head><title>Ubuntu Manpage Repository</title></head><body onLoad="self.print()">');          
+	docprint.document.write(content);          
+	docprint.document.write('<body></html>'); 
+	docprint.document.close(); 
+	docprint.focus(); 
+}
+
 
 
 //////////////////////////////////
