@@ -96,7 +96,7 @@ else:
 		else:
 			lr = "en"
 
-		versions = dict(dapper="6.06 LTS", hardy="8.04 LTS", intrepid="8.10", jaunty="9.04", karmic="9.10", lucid="10.04 LTS")
+		versions = dict(dapper="6.06 LTS", hardy="8.04 LTS", jaunty="9.04", karmic="9.10", lucid="10.04 LTS", maverick="10.10")
 		distros = versions.keys()
 		distros.sort()
 		title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
