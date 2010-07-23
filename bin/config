@@ -1,11 +1,12 @@
+
 # Customize this file and rename it to 'config'
 
-DEBDIR=/path/to/full/mirror
+DEBDIR=/srv/archive.ubuntu.com/ubuntu
 
-PUBLIC_HTML_DIR="/path/to/www"
+PUBLIC_HTML_DIR="/srv/manpages.ubuntu.com/www"
 MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
 
-SITE="http://ubuntu.example.com"
+SITE="http://manpages.ubuntu.com"
 
 DISTROS="maverick lucid karmic jaunty hardy dapper"
 REPOS="main restricted universe multiverse"
