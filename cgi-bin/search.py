@@ -31,8 +31,7 @@ import os
 import re
 
 # You may need to uncomment and edit this line in your environment
-#os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
-os.chdir("/home/stuartm/Canonical/themes/manpages-light-theme/cgi-bin")
+os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
 
 html = "Content-Type: text/html\n\n"
 
