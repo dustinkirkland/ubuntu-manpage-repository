@@ -47,7 +47,7 @@
     </BackgroundLabels>
   </Context>
   <LookAndFeel nonprofit="false">
-    <Colors url="#6d4c07" background="#FFFFFF" border="#CCCCCC" title="#6d4c07" text="#000000" visited="#6d4c07" light="#000000"/>
+    <Colors url="#6d4c07" background="#F7F7F7" border="#CCCCCC" title="#6d4c07" text="#000000" visited="#6d4c07" light="#000000"/>
   </LookAndFeel>
   <AdSense/>
   <EnterpriseAccount/>

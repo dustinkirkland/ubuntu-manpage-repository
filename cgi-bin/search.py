@@ -31,7 +31,8 @@ import os
 import re
 
 # You may need to uncomment and edit this line in your environment
-os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
+#os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
+os.chdir("/home/stuartm/Canonical/themes/manpages-light-theme/cgi-bin")
 
 html = "Content-Type: text/html\n\n"
 
@@ -52,7 +53,7 @@ google_cse_html = '''
 <script type="text/javascript">
   var googleSearchIframeName = "cse-search-results";
   var googleSearchFormName = "cse-search-box";
-  var googleSearchFrameWidth = 600;
+  var googleSearchFrameWidth = 500;
   var googleSearchDomain = "www.google.com";
   var googleSearchPath = "/cse";
   var googleSearchResizeIframe = false;
@@ -60,82 +61,77 @@ google_cse_html = '''
 <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
 '''
 
-if get.has_key("text"):
-	html += google_cse_html
+# Title only (file name match search)
+descr = ["",                            # 0
+"Executable programs or shell commands",            # 1
+"System calls (functions provided by the kernel)",      # 2
+"Library calls (functions within program libraries)",       # 3
+"Special files (usually found in /dev)",            # 4
+"File formats and conventions eg /etc/passwd",          # 5
+"Games",                            # 6
+"Miscellaneous (including macro  packages  and  conventions)",  # 7
+"System administration commands (usually only for root)",   # 8
+"Kernel routines [Non standard]"]               # 9
+
+t = ""
+if get.has_key("q"):
+    t = get["q"].value
+
+p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
+t = p.sub('', t)
+title_html = "<script>document.forms[0].q.value='" + t + "';</script>"
+
+if get.has_key("lr"):
+    lr = get["lr"].value
+    p = re.compile( '^lang_' );
+    lr = p.sub('', lr)
+    p = re.compile( '[^a-zA-Z-]' );
+    lr = p.sub('', lr)
+    p = re.compile( '[-]' );
+    lr = p.sub('_', lr)
 else:
-	# Title only (file name match search)
-	descr = ["",							# 0
-	"Executable programs or shell commands",			# 1
-	"System calls (functions provided by the kernel)",		# 2
-	"Library calls (functions within program libraries)",		# 3
-	"Special files (usually found in /dev)",			# 4
-	"File formats and conventions eg /etc/passwd",			# 5
-	"Games",							# 6
-	"Miscellaneous (including macro  packages  and  conventions)",	# 7
-	"System administration commands (usually only for root)",	# 8
-	"Kernel routines [Non standard]"]				# 9
+    lr = "en"
 
-	t = ""
-	if get.has_key("title"):
-		t = get["title"].value
-	elif get.has_key("q"):
-		t = get["q"].value
-	if t != "":
-		p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
-		t = p.sub('', t)
-		title_html = "<script>document.forms[0].q.value='" + t + "';</script>"
+versions = dict(dapper="6.06 LTS", hardy="8.04 LTS", jaunty="9.04", karmic="9.10", lucid="10.04 LTS", maverick="10.10")
+distros = versions.keys()
+distros.sort()
+title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
+for d in distros:
+    title_html += "<th bgcolor=#f0bcc1>%s<br><small>%s</small></th>" % (d, versions[d])
+title_html += "<th bgcolor=#f0bcc1>Section Description</th></tr>"
+matches = 0
+for i in range(1,10):
+    title_html += "<tr>"
+    for d in distros:
+        color = "lightgrey"
+        path = "../www/manpages/%s/%s/man%d/%s.%d*.html" % (d, lr, i, t, i)
+        title_html += "<td align=center>"
+        dot = "."
+        for g in glob.glob(path):
+            matches += 1
+            dot = ""
+            color = "black"
+            href_path = p1.sub('', g)
+            page = p2.sub('', g)
+            page = p3.sub('', page)
+            page = p4.sub('', page)
+            title_html += '<a href="%s" style="text-decoration:none">%s(%d)</a>, ' % (href_path, page, i)
+        title_html = p5.sub('', title_html)
+        title_html += dot + "</td>"
+    title_html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
+title_html += "</table></td></tr></table><br>"
+if (matches > 0):
+    if get.has_key("titles") and get["titles"].value == "404":
+        # If we were sent here by a 404-not-found, and we have at least one match,
+        # redirect the user to the last page in our list
+        html += "<script>location.replace('" + href_path + "');</script>"
+    else:
+        # Otherwise, a normal title search, display the title table
+        html += title_html
+else:
+    # But if we do not find any matching titles, do a full text search
+    html += "<strong>No matching titles found - Full text search results below</strong>"
 
-		if get.has_key("lr"):
-			lr = get["lr"].value
-			p = re.compile( '^lang_' );
-			lr = p.sub('', lr)
-			p = re.compile( '[^a-zA-Z-]' );
-			lr = p.sub('', lr)
-			p = re.compile( '[-]' );
-			lr = p.sub('_', lr)
-		else:
-			lr = "en"
-
-		versions = dict(dapper="6.06 LTS", hardy="8.04 LTS", jaunty="9.04", karmic="9.10", lucid="10.04 LTS", maverick="10.10")
-		distros = versions.keys()
-		distros.sort()
-		title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"
-		for d in distros:
-			title_html += "<th bgcolor=#f0bcc1>%s<br><small>%s</small></th>" % (d, versions[d])
-		title_html += "<th bgcolor=#f0bcc1>Section Description</th></tr>"
-		matches = 0
-		for i in range(1,10):
-			title_html += "<tr>"
-			for d in distros:
-				color = "lightgrey"
-				path = "../www/manpages/%s/%s/man%d/%s.%d*.html" % (d, lr, i, t, i)
-				title_html += "<td align=center>"
-				dot = "."
-				for g in glob.glob(path):
-					matches += 1
-					dot = ""
-					color = "black"
-					href_path = p1.sub('', g)
-					page = p2.sub('', g)
-					page = p3.sub('', page)
-					page = p4.sub('', page)
-					title_html += '<a href="%s" style="text-decoration:none">%s(%d)</a>, ' % (href_path, page, i)
-				title_html = p5.sub('', title_html)
-				title_html += dot + "</td>"
-			title_html += '<td><font color="%s">(%d) - <small>%s</small></td></tr>' % (color, i, descr[i])
-		title_html += "</table></td></tr></table><br>"
-		if (matches > 0):
-			if get.has_key("titles") and get["titles"].value == "404":
-				# If we were sent here by a 404-not-found, and we have at least one match,
-				# redirect the user to the last page in our list
-				html += "<script>location.replace('" + href_path + "');</script>"
-			else:
-				# Otherwise, a normal title search, display the title table
-				html += title_html
-		else:
-			# But if we do not find any matching titles, do a full text search
-			html += "<strong>No matching titles found - Full text search results below</strong>" + google_cse_html
-
-
+html += "<hr />" + google_cse_html
 html += open("../www/below.html").read()
 print html

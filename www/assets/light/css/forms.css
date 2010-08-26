@@ -1,0 +1,103 @@
+/* Form related styling */
+input, select {
+    /* Override mozilla's default form css inherited from the system */
+    font-size: 100%;
+}
+.wForm form label {
+    display: block;
+    padding-bottom: 3px;
+    color: black;
+}
+.wForm form input[type=text],
+.wForm form input[type=password],
+.wForm form textarea {
+    border: 1px solid #c7c7c7;
+    padding: 2px;
+    color: black;
+    background: #fff;
+}
+.wForm form input[type=text]:focus,
+.wForm form input[type=password]:focus,
+.wForm form textarea:focus {
+    border: 1px solid #dd4814;
+    outline: 1px solid #dd4814;
+}
+/* Override FormAssembly formatting */
+.wFormContainer {
+    padding: 0;
+    width: 100%;
+}
+.wForm form {
+    margin: 0;
+}
+.wForm form .actions {
+    text-align: right;
+}
+.wForm form .actions .primaryAction {
+    background-color: #dd4814;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 16px;
+    padding: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-shadow: #333 0px 1px;
+    margin: 10px 8px 10px 8px;
+}
+.wForm form input[type=text].errFld {
+    border: 2px solid #dd4814;
+}
+.wForm form .errMsg {
+    color: #dd4814 !important;
+}
+.wForm form .oneChoice {
+    display: block;
+}
+.wForm form .oneField {
+    padding: 0 8px;
+    margin-bottom: 8px;
+}
+.wForm form span.reqMark {
+    color: #dd4814 !important;
+    font-weight: bold !important;
+}
+.wForm fieldset {
+    border: none;
+    padding: 0;
+    background: #dfdcd9;
+}
+.wForm input[type=text],
+.wForm input[type=password],
+.wForm select,
+.wForm textarea {
+    width: 290px;
+}
+.wForm legend {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: normal !important;
+    background: #aea79f;
+    width: 100%;
+    color: #fff;
+    margin-bottom: 8px;
+}
+.wForm label.preField,
+.wForm .labelsLeftAligned label.preField,
+.wForm .labelsRightAligned label.preField  {
+    float: none;
+    padding-bottom: 4px;
+}
+.wForm label.postField {
+    display: inline;
+}
+/* Hack for WebKit based browsers to display the fieldset properly */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .wForm fieldset {
+        padding: 8px 8px .1px 0px;
+    }
+    .wForm legend {
+        padding: 8px 0px 8px 8px;
+    }
+}
