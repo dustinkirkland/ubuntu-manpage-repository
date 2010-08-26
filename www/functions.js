@@ -145,7 +145,7 @@ function getWidth() {
 
 function printManpage() {
     var disp_setting="toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=yes,width=600,height=400";
-    var content = document.getElementById("top").innerHTML;
+    var content = document.getElementById("content").innerHTML;
     var docprint = window.open("","",disp_setting);
     docprint.document.open();
     docprint.document.write('<html><head><title>Ubuntu Manpage Repository</title></head><body onLoad="self.print()">');
