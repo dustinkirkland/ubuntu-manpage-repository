@@ -34,3 +34,17 @@ pre img {
     margin: 4px;
     vertical-align: middle;
 }
+
+table {
+    background: white;
+    border: none;
+    width: 100%;
+}
+
+#content td {
+    border: none;
+}
+
+#content table table td {
+    border-bottom: 1px dotted #CCC;
+}
