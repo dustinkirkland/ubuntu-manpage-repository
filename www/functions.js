@@ -70,21 +70,17 @@ function distroAndSection() {
         section = section.replace(/^man/, "");
         var lang = parts[5];
     }
-    document.write("<div class=\"level-3-nav\"><ul>");
     if (distro.length > 0) {
-        document.write("<li><a href=\"../\">" + distro + "</a> ");
+        document.write("<a href=\"../\">" + distro + "</a> ");
         if (section.length > 0) {
-            document.write("(<a href=\"../man" + section + "\">" + section + "</a>)");
+            document.write("(<a href=\"../man" + section + "\">" + section + "</a>) ");
         }
-        document.write("</li>")
     }
     var gz_href = location.href.replace(/\/manpages\//, "\/manpages.gz\/");
     gz_href = gz_href.replace(/\/en\//, "\/");
     gz_href = gz_href.replace(/\.html$/, "\.gz");
     var gz = gz_href.replace(/^.*\//, "");
-    document.write("<li><a href=\"" + gz_href + "\">" + gz + "</a></li>");
-    document.write("<li><a href=\"javascript:printManpage()\">Print page</a></li>");
-    document.write("</ul></div>");
+    document.write("<a href=\"" + gz_href + "\">" + gz + "</a><br>");
 }
 
 function highlight(word) {
@@ -112,6 +108,7 @@ function navbar() {
                     document.write("<li id=\"" + highlight(versions[i]["name"]) + "\"><a href=\"/manpages/" + versions[i]["name"] + "\">" + versions[i]["number"] + "</a></li>");
         }
         }
+        document.write("<li><a href=\"javascript:printManpage()\"><img src=/img/printer.png></a></li>");
         document.write("</ul>");
 }
 
