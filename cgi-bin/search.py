@@ -75,6 +75,16 @@ descr = ["",                            # 0
 t = ""
 if get.has_key("q"):
     t = get["q"].value
+x = 1
+y = 9
+extra = ""
+# User might have specified the section
+p = re.compile( '(.*)\.([1-9])(.*)$' );
+if n = p.search(t):
+    t = n.group(1)
+    x = int(n.group(2))
+    y = int(n.group(2))
+    extra = n.group(3)
 
 p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
 t = p.sub('', t)
@@ -99,11 +109,11 @@ for d in distros:
     title_html += "<th bgcolor=#f0bcc1>%s<br><small>%s</small></th>" % (d, versions[d])
 title_html += "<th bgcolor=#f0bcc1>Section Description</th></tr>"
 matches = 0
-for i in range(1,10):
+for i in range(x,y):
     title_html += "<tr>"
     for d in distros:
         color = "lightgrey"
-        path = "../www/manpages/%s/%s/man%d/%s.%d*.html" % (d, lr, i, t, i)
+        path = "../www/manpages/%s/%s/man%d/%s.%d%s*.html" % (d, lr, i, t, i, extra)
         title_html += "<td align=center>"
         dot = "."
         for g in glob.glob(path):
