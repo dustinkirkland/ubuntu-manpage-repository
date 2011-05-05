@@ -84,7 +84,7 @@ n = p.search(t)
 if n:
     t = n.group(1)
     x = int(n.group(2))
-    y = int(n.group(2))
+    y = x + 1
     extra = n.group(3)
 
 p = re.compile( '[^\.a-zA-Z0-9\/_\:\+@-]' );
