@@ -80,7 +80,8 @@ y = 9
 extra = ""
 # User might have specified the section
 p = re.compile( '(.*)\.([1-9])(.*)$' );
-if n = p.search(t):
+n = p.search(t)
+if n:
     t = n.group(1)
     x = int(n.group(2))
     y = int(n.group(2))
