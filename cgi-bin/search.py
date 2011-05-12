@@ -31,7 +31,7 @@ import os
 import re
 
 # You may need to uncomment and edit this line in your environment
-os.chdir("/var/www/ubuntu-manpage-repository/cgi-bin")
+os.chdir("/srv/manpages.ubuntu.com/www")
 
 html = "Content-Type: text/html\n\n"
 
