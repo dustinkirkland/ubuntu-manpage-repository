@@ -102,7 +102,7 @@ if get.has_key("lr"):
 else:
     lr = "en"
 
-versions = dict(dapper="6.06 LTS", hardy="8.04 LTS", lucid="10.04 LTS", maverick="10.10", natty="11.04", oneiric="11.10")
+versions = dict(hardy="8.04 LTS", lucid="10.04 LTS", maverick="10.10", natty="11.04", oneiric="11.10", precise="12.04")
 distros = versions.keys()
 distros.sort()
 title_html += "<br><table border=2 cellpadding=5 cellspacing=0><tr><td><table cellspacing=0 cellpadding=5><tr>"

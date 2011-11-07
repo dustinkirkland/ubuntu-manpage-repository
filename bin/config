@@ -8,6 +8,6 @@ MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
 
 SITE="http://manpages.ubuntu.com"
 
-DISTROS="oneiric natty maverick lucid hardy dapper"
+DISTROS="precise oneiric natty maverick lucid hardy"
 REPOS="main restricted universe multiverse"
 ARCH="i386"
