@@ -1,0 +1,10 @@
+{
+	"WEBARCHIVE": "http://archive.ubuntu.com/ubuntu",
+	"WEBARCHIVE": "http://us-east-1.ec2.archive.ubuntu.com.s3.amazonaws.com/ubuntu",
+	"TMPDIR": "/tmp",
+	"PUBLIC_HTML_DIR": "/tmp/manpages.ubuntu.com/www",
+	"SITE": "http://ec2-54-234-83-63.compute-1.amazonaws.com",
+	"DISTROS": ["raring"],
+	"REPOS": ["main"],
+	"ARCH": "i386"
+}
