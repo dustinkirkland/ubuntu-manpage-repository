@@ -100,9 +100,11 @@ def fetch_manpages(dist, deb, md5):
 			if re.search("^usr/share/man/.*\.gz$", f):
 				manpages.append(f)
 		if manpages:
-			logging.info("Extracting manpages from [%s]" % deb)
+			logging.info("    Extracting manpages from [%s]" % deb)
 			proc = subprocess.Popen(['dpkg', '-x', TEMPFILE, TEMPDIR], stdout=subprocess.PIPE)
 			out, _ = proc.communicate(None)
+			for m in manpages:
+				logging.info("      Considering manpage [%s]" % m)
 		else:
 			logging.info("    No manpages in [%s]" % deb)
 			cache_file = "%s/manpages/%s/.cache/%s" % (CONFIG["PUBLIC_HTML_DIR"], dist, deb)
