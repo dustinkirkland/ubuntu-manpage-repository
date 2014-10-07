@@ -8,6 +8,6 @@ MANPAGE_DIR="$PUBLIC_HTML_DIR/manpages"
 
 SITE="http://manpages.ubuntu.com"
 
-DISTROS="trusty saucy raring quantal precise lucid"
+DISTROS="utopic trusty precise lucid"
 REPOS="main restricted universe multiverse"
 ARCH="i386"

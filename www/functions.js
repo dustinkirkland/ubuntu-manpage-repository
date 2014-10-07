@@ -95,10 +95,8 @@ function navbar() {
         versions = new Array();
         versions.push({"name":"lucid", "number":"10.04 LTS"});
         versions.push({"name":"precise", "number":"12.04 LTS"});
-        versions.push({"name":"quantal", "number":"12.10"});
-        versions.push({"name":"raring", "number":"13.04"});
-        versions.push({"name":"saucy", "number":"13.10"});
-        versions.push({"name":"trusty", "number":"14.04"});
+        versions.push({"name":"trusty", "number":"14.04 LTS"});
+        versions.push({"name":"utopic", "number":"14.10"});
         for (var i=0; i<versions.length; i++) {
             if (location.href.match("\.html$")) {
             href = location.href;
